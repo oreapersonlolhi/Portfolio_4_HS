@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio Project | Heidi Portfolio</title>
+    <link rel="stylesheet" href="portfolio-pages.css" />
+  </head>
+  <body>
+    <main>
+      <div class="topbar">
+        <nav aria-label="Project navigation">
+          <a href="index.html">Back to home</a>
+          <a id="category-link" href="category.html?category=architecture">Back to category</a>
+        </nav>
+        <button class="mode-toggle" type="button" id="editor-mode-toggle" aria-pressed="false" title="Editor Mode">
+          <span class="mode-icon" aria-hidden="true"></span>
+          <span>Editor Mode</span>
+        </button>
+      </div>
+
+      <section class="detail-layout" id="project-detail"></section>
+
+      <footer>
+        <p>Use the thumbnails to view more pictures from this project.</p>
+        <p class="editor-only">Editor Mode lets you rename, edit text, add image links, hide images, and choose display images.</p>
+      </footer>
+    </main>
+
+    <script src="portfolio-data.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get("project") || "micro-shelter";
+      const project = window.PORTFOLIO_PROJECTS.find((item) => item.id === projectId) || window.PORTFOLIO_PROJECTS[0];
+      const savedImage = localStorage.getItem(`display-image:${project.id}`);
+      const hiddenKey = `hidden-images:${project.id}`;
+      const titleKey = `project-title:${project.id}`;
+      const summaryKey = `project-summary:${project.id}`;
+      const notesKey = `project-notes:${project.id}`;
+      const extraImagesKey = `extra-images:${project.id}`;
+      let currentImage = savedImage || project.cover;
+
+      document.getElementById("category-link").href = `category.html?category=${project.category}`;
+      document.getElementById("category-link").textContent = `Back to ${project.categoryLabel}`;
+
+      function editorMode() {
+        return localStorage.getItem("editor-mode") === "true";
+      }
+
+      function syncEditorMode() {
+        const enabled = editorMode();
+        document.body.classList.toggle("editor-mode", enabled);
+        const toggle = document.getElementById("editor-mode-toggle");
+        toggle.setAttribute("aria-pressed", String(enabled));
+      }
+
+      function projectTitle() {
+        return localStorage.getItem(titleKey) || project.title;
+      }
+
+      function projectSummary() {
+        return localStorage.getItem(summaryKey) || project.summary;
+      }
+
+      function projectNotes() {
+        const saved = localStorage.getItem(notesKey);
+        if (!saved) return project.notes;
+        try {
+          const notes = JSON.parse(saved);
+          return Array.isArray(notes) && notes.length ? notes : project.notes;
+        } catch {
+          return project.notes;
+        }
+      }
+
+      function notesText() {
+        return projectNotes().join("\n");
+      }
+
+      function escapeHTML(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function hiddenImages() {
+        try {
+          return JSON.parse(localStorage.getItem(hiddenKey)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function extraImages() {
+        try {
+          return JSON.parse(localStorage.getItem(extraImagesKey)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function allImages() {
+        return [...project.images, ...extraImages()];
+      }
+
+      function visibleImages() {
+        const hidden = new Set(hiddenImages());
+        const images = allImages();
+        const visible = images.filter((image) => !hidden.has(image));
+        return visible.length ? visible : images;
+      }
+
+      function saveHidden(images) {
+        localStorage.setItem(hiddenKey, JSON.stringify(images));
+      }
+
+      function render() {
+        const hidden = hiddenImages();
+        const visible = visibleImages();
+        const title = projectTitle();
+        const summary = projectSummary();
+        const notes = projectNotes();
+        const safeTitle = escapeHTML(title);
+        const safeSummary = escapeHTML(summary);
+        const safeNotesText = escapeHTML(notesText());
+        if (!visible.includes(currentImage)) {
+          currentImage = visible[0];
+        }
+        document.title = `${title} | Heidi Portfolio`;
+
+        document.getElementById("project-detail").innerHTML = `
+          <div>
+            <div class="detail-main-image">
+              <img id="main-image" src="${currentImage}" alt="${safeTitle}">
+            </div>
+            <div class="thumb-grid" aria-label="Project images">
+              ${visible.map((image, index) => `
+                <div class="thumb-card">
+                  <button class="thumb-button" type="button" aria-pressed="${image === currentImage}" data-image="${image}">
+                    <span class="thumb"><img src="${image}" alt="${safeTitle} image ${index + 1}"></span>
+                  </button>
+                  <button class="hide-image editor-only" type="button" data-image="${image}" ${visible.length === 1 ? "disabled" : ""}>
+                    Hide from project
+                  </button>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+          <div class="detail-copy">
+            <p class="eyebrow">${project.categoryLabel} / ${project.year}</p>
+            <h1>${safeTitle}</h1>
+            <p>${safeSummary}</p>
+            <form class="edit-form editor-only" id="rename-form">
+              <label for="project-title-input">Project title</label>
+              <div class="rename-row">
+                <input id="project-title-input" type="text" value="${safeTitle}" autocomplete="off">
+                <button type="submit">Rename</button>
+              </div>
+            </form>
+            <form class="edit-form editor-only" id="text-form">
+              <label for="project-summary-input">Project summary</label>
+              <textarea id="project-summary-input" rows="4">${safeSummary}</textarea>
+              <label for="project-notes-input">Process notes</label>
+              <textarea id="project-notes-input" rows="7">${safeNotesText}</textarea>
+              <div class="edit-actions">
+                <button class="primary" type="submit">Save text</button>
+                <button type="button" id="reset-text">Reset text</button>
+              </div>
+            </form>
+            <form class="edit-form editor-only" id="add-image-form">
+              <label for="project-image-url">Add photo by URL or local path</label>
+              <div class="rename-row">
+                <input id="project-image-url" type="text" placeholder="public/portfolio/example.jpg or https://..." autocomplete="off">
+                <button type="submit">Add photo</button>
+              </div>
+            </form>
+            <div class="notes-label">Process notes</div>
+            <ul>${notes.map((note) => `<li>${escapeHTML(note)}</li>`).join("")}</ul>
+            <div class="display-actions editor-only">
+              <button class="primary" type="button" id="set-display">Set as display image</button>
+              <button type="button" id="set-home-image">Set as homepage image</button>
+              <button type="button" id="reset-display">Reset display image</button>
+              <button type="button" id="restore-images" ${hidden.length ? "" : "disabled"}>Restore hidden pictures</button>
+              <a href="category.html?category=${project.category}">See category page</a>
+            </div>
+            <p><a class="open-link" href="category.html?category=${project.category}">See category page</a></p>
+            <div class="status" id="status"></div>
+          </div>
+        `;
+        syncEditorMode();
+
+        document.querySelectorAll(".thumb-button").forEach((button) => {
+          button.addEventListener("click", () => {
+            currentImage = button.dataset.image;
+            render();
+          });
+        });
+
+        document.querySelectorAll(".hide-image").forEach((button) => {
+          button.addEventListener("click", () => {
+            const image = button.dataset.image;
+            if (visibleImages().length <= 1) {
+              document.getElementById("status").textContent = "Keep at least one picture visible in the project.";
+              return;
+            }
+            saveHidden([...new Set([...hiddenImages(), image])]);
+            if (localStorage.getItem(`display-image:${project.id}`) === image) {
+              localStorage.removeItem(`display-image:${project.id}`);
+            }
+            currentImage = visibleImages()[0];
+            render();
+          });
+        });
+
+        document.getElementById("rename-form").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const input = document.getElementById("project-title-input");
+          const nextTitle = input.value.trim();
+          if (!nextTitle) {
+            document.getElementById("status").textContent = "Project title cannot be blank.";
+            return;
+          }
+          if (nextTitle === project.title) {
+            localStorage.removeItem(titleKey);
+          } else {
+            localStorage.setItem(titleKey, nextTitle);
+          }
+          render();
+          document.getElementById("status").textContent = "Project title updated across this browser.";
+        });
+
+        document.getElementById("add-image-form").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const input = document.getElementById("project-image-url");
+          const image = input.value.trim();
+          if (!image) {
+            document.getElementById("status").textContent = "Add an image URL or local image path.";
+            return;
+          }
+          localStorage.setItem(extraImagesKey, JSON.stringify([...new Set([...extraImages(), image])]));
+          currentImage = image;
+          render();
+          document.getElementById("status").textContent = "Photo added to this project in this browser.";
+        });
+
+        document.getElementById("text-form").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const summaryInput = document.getElementById("project-summary-input");
+          const notesInput = document.getElementById("project-notes-input");
+          const nextSummary = summaryInput.value.trim();
+          const nextNotes = notesInput.value
+            .split("\n")
+            .map((note) => note.trim())
+            .filter(Boolean);
+
+          if (!nextSummary) {
+            document.getElementById("status").textContent = "Project summary cannot be blank.";
+            return;
+          }
+          if (!nextNotes.length) {
+            document.getElementById("status").textContent = "Add at least one process note.";
+            return;
+          }
+
+          if (nextSummary === project.summary) {
+            localStorage.removeItem(summaryKey);
+          } else {
+            localStorage.setItem(summaryKey, nextSummary);
+          }
+          if (JSON.stringify(nextNotes) === JSON.stringify(project.notes)) {
+            localStorage.removeItem(notesKey);
+          } else {
+            localStorage.setItem(notesKey, JSON.stringify(nextNotes));
+          }
+          render();
+          document.getElementById("status").textContent = "Project text updated across this browser.";
+        });
+
+        document.getElementById("reset-text").addEventListener("click", () => {
+          localStorage.removeItem(summaryKey);
+          localStorage.removeItem(notesKey);
+          render();
+          document.getElementById("status").textContent = "Project text reset to the original draft.";
+        });
+
+        document.getElementById("set-display").addEventListener("click", () => {
+          localStorage.setItem(`display-image:${project.id}`, currentImage);
+          document.getElementById("status").textContent = "Display image updated for this project.";
+        });
+
+        document.getElementById("set-home-image").addEventListener("click", () => {
+          localStorage.setItem(`home-image:${project.id}`, currentImage);
+          document.getElementById("status").textContent = "Homepage image updated for this project.";
+        });
+
+        document.getElementById("reset-display").addEventListener("click", () => {
+          localStorage.removeItem(`display-image:${project.id}`);
+          currentImage = project.cover;
+          render();
+        });
+
+        document.getElementById("restore-images").addEventListener("click", () => {
+          localStorage.removeItem(hiddenKey);
+          currentImage = localStorage.getItem(`display-image:${project.id}`) || project.cover;
+          render();
+        });
+      }
+
+      document.getElementById("editor-mode-toggle").addEventListener("click", () => {
+        localStorage.setItem("editor-mode", String(!editorMode()));
+        syncEditorMode();
+        render();
+      });
+
+      syncEditorMode();
+      render();
+    </script>
+  </body>
+</html>

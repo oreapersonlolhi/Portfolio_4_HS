@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio Category | Heidi Portfolio</title>
+    <link rel="stylesheet" href="portfolio-pages.css" />
+  </head>
+  <body>
+    <main>
+      <div class="topbar">
+        <nav aria-label="Category navigation">
+          <a href="index.html">Back to home</a>
+          <a href="category.html?category=architecture">Architecture</a>
+          <a href="category.html?category=sketching">Sketching</a>
+          <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
+        </nav>
+        <button class="mode-toggle" type="button" id="editor-mode-toggle" aria-pressed="false" title="Editor Mode">
+          <span class="mode-icon" aria-hidden="true"></span>
+          <span>Editor Mode</span>
+        </button>
+      </div>
+
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Category Showcase</p>
+          <h1 id="category-title">Portfolio Work</h1>
+        </div>
+        <p id="category-copy">
+          Selected projects from this category, with room to compare final work,
+          process images, and project notes.
+        </p>
+      </header>
+
+      <section class="project-grid" id="project-grid" aria-label="Projects"></section>
+
+      <footer>
+        <p>Choose a project to see more images.</p>
+        <p class="editor-only">Editor Mode keeps editing controls available on project pages and the homepage.</p>
+      </footer>
+    </main>
+
+    <script src="portfolio-data.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const category = params.get("category") || "architecture";
+      const titles = {
+        architecture: "Architecture + Physical Work",
+        sketching: "Sketching",
+        "electronic-engineering": "Electronic Engineering"
+      };
+      const copy = {
+        architecture: "Models, spatial studies, and physical pieces curated for admissions reviewers.",
+        sketching: "Chronological drawing work showing observation, line quality, and growth.",
+        "electronic-engineering": "Hands-on circuit and prototype work showing systems thinking and making."
+      };
+
+      document.title = `${titles[category] || "Portfolio Work"} | Heidi Portfolio`;
+      document.getElementById("category-title").textContent = titles[category] || "Portfolio Work";
+      document.getElementById("category-copy").textContent = copy[category] || copy.architecture;
+
+      function editorMode() {
+        return localStorage.getItem("editor-mode") === "true";
+      }
+
+      function syncEditorMode() {
+        const enabled = editorMode();
+        document.body.classList.toggle("editor-mode", enabled);
+        const toggle = document.getElementById("editor-mode-toggle");
+        toggle.setAttribute("aria-pressed", String(enabled));
+      }
+
+      function hiddenImages(project) {
+        try {
+          return JSON.parse(localStorage.getItem(`hidden-images:${project.id}`)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function extraImages(project) {
+        try {
+          return JSON.parse(localStorage.getItem(`extra-images:${project.id}`)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function allImages(project) {
+        return [...project.images, ...extraImages(project)];
+      }
+
+      function displayImage(project) {
+        const hidden = new Set(hiddenImages(project));
+        const saved = localStorage.getItem(`display-image:${project.id}`);
+        const images = allImages(project);
+        if (saved && images.includes(saved) && !hidden.has(saved)) {
+          return saved;
+        }
+        return images.find((image) => !hidden.has(image)) || project.cover;
+      }
+
+      function projectTitle(project) {
+        return localStorage.getItem(`project-title:${project.id}`) || project.title;
+      }
+
+      function projectSummary(project) {
+        return localStorage.getItem(`project-summary:${project.id}`) || project.summary;
+      }
+
+      function escapeHTML(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      const projects = window.PORTFOLIO_PROJECTS.filter((project) => project.category === category);
+      const grid = document.getElementById("project-grid");
+
+      grid.innerHTML = projects.map((project) => {
+        const title = escapeHTML(projectTitle(project));
+        const summary = escapeHTML(projectSummary(project));
+        return `
+        <a class="project-card" href="project.html?project=${project.id}">
+          <div class="project-image-wrap">
+            <img src="${displayImage(project)}" alt="${title}">
+          </div>
+          <div class="project-copy">
+            <div class="project-kicker"><span>${project.categoryLabel}</span><span>${project.year}</span></div>
+            <h2>${title}</h2>
+            <p>${summary}</p>
+            <span class="open-link">Open project</span>
+          </div>
+        </a>
+      `;
+      }).join("");
+
+      document.getElementById("editor-mode-toggle").addEventListener("click", () => {
+        localStorage.setItem("editor-mode", String(!editorMode()));
+        syncEditorMode();
+      });
+
+      syncEditorMode();
+    </script>
+  </body>
+</html>
