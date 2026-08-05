@@ -224,6 +224,11 @@
         display: none !important;
       }
 
+      .mode-toggle,
+      .editor-only {
+        display: none !important;
+      }
+
       .featured-section {
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.9fr);
@@ -522,10 +527,6 @@
       <header class="hero">
         <div class="hero-top">
           <p class="eyebrow">Boarding / High-School Application Portfolio</p>
-          <button class="mode-toggle" type="button" id="editor-mode-toggle" aria-pressed="false" title="Editor Mode">
-            <span class="mode-icon" aria-hidden="true"></span>
-            <span>Editor Mode</span>
-          </button>
         </div>
         <h1>Art / Architecture /<br />Electronic Engineering Portfolio</h1>
         <div class="intro-row">
@@ -754,14 +755,16 @@
       }
 
       function editorMode() {
-        return localStorage.getItem("editor-mode") === "true";
+        return false;
       }
 
       function syncEditorMode() {
-        const enabled = editorMode();
-        document.body.classList.toggle("editor-mode", enabled);
+        const enabled = false;
+        document.body.classList.remove("editor-mode");
         const toggle = document.getElementById("editor-mode-toggle");
-        toggle.setAttribute("aria-pressed", String(enabled));
+        if (toggle) {
+          toggle.setAttribute("aria-pressed", String(enabled));
+        }
       }
 
       function savedProjectTitle(projectId) {
@@ -951,10 +954,12 @@
         });
       }
 
-      document.getElementById("editor-mode-toggle").addEventListener("click", () => {
-        localStorage.setItem("editor-mode", String(!editorMode()));
-        syncEditorMode();
-      });
+      const editorToggle = document.getElementById("editor-mode-toggle");
+      if (editorToggle) {
+        editorToggle.addEventListener("click", () => {
+          syncEditorMode();
+        });
+      }
 
       syncEditorMode();
       renderHome();

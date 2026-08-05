@@ -151,6 +151,11 @@ body:not(.editor-mode) .editor-only {
   display: none !important;
 }
 
+.mode-toggle,
+.editor-only {
+  display: none !important;
+}
+
 .page-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);

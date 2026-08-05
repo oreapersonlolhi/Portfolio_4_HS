@@ -15,10 +15,6 @@
           <a href="category.html?category=sketching">Sketching</a>
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
         </nav>
-        <button class="mode-toggle" type="button" id="editor-mode-toggle" aria-pressed="false" title="Editor Mode">
-          <span class="mode-icon" aria-hidden="true"></span>
-          <span>Editor Mode</span>
-        </button>
       </div>
 
       <header class="page-head">
@@ -36,7 +32,6 @@
 
       <footer>
         <p>Choose a project to see more images.</p>
-        <p class="editor-only">Editor Mode keeps editing controls available on project pages and the homepage.</p>
       </footer>
     </main>
 
@@ -60,14 +55,16 @@
       document.getElementById("category-copy").textContent = copy[category] || copy.architecture;
 
       function editorMode() {
-        return localStorage.getItem("editor-mode") === "true";
+        return false;
       }
 
       function syncEditorMode() {
-        const enabled = editorMode();
-        document.body.classList.toggle("editor-mode", enabled);
+        const enabled = false;
+        document.body.classList.remove("editor-mode");
         const toggle = document.getElementById("editor-mode-toggle");
-        toggle.setAttribute("aria-pressed", String(enabled));
+        if (toggle) {
+          toggle.setAttribute("aria-pressed", String(enabled));
+        }
       }
 
       function hiddenImages(project) {
@@ -138,10 +135,12 @@
       `;
       }).join("");
 
-      document.getElementById("editor-mode-toggle").addEventListener("click", () => {
-        localStorage.setItem("editor-mode", String(!editorMode()));
-        syncEditorMode();
-      });
+      const editorToggle = document.getElementById("editor-mode-toggle");
+      if (editorToggle) {
+        editorToggle.addEventListener("click", () => {
+          syncEditorMode();
+        });
+      }
 
       syncEditorMode();
     </script>

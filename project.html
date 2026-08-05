@@ -13,17 +13,12 @@
           <a href="index.html">Back to home</a>
           <a id="category-link" href="category.html?category=architecture">Back to category</a>
         </nav>
-        <button class="mode-toggle" type="button" id="editor-mode-toggle" aria-pressed="false" title="Editor Mode">
-          <span class="mode-icon" aria-hidden="true"></span>
-          <span>Editor Mode</span>
-        </button>
       </div>
 
       <section class="detail-layout" id="project-detail"></section>
 
       <footer>
         <p>Use the thumbnails to view more pictures from this project.</p>
-        <p class="editor-only">Editor Mode lets you rename, edit text, add image links, hide images, and choose display images.</p>
       </footer>
     </main>
 
@@ -44,14 +39,16 @@
       document.getElementById("category-link").textContent = `Back to ${project.categoryLabel}`;
 
       function editorMode() {
-        return localStorage.getItem("editor-mode") === "true";
+        return false;
       }
 
       function syncEditorMode() {
-        const enabled = editorMode();
-        document.body.classList.toggle("editor-mode", enabled);
+        const enabled = false;
+        document.body.classList.remove("editor-mode");
         const toggle = document.getElementById("editor-mode-toggle");
-        toggle.setAttribute("aria-pressed", String(enabled));
+        if (toggle) {
+          toggle.setAttribute("aria-pressed", String(enabled));
+        }
       }
 
       function projectTitle() {
@@ -309,11 +306,13 @@
         });
       }
 
-      document.getElementById("editor-mode-toggle").addEventListener("click", () => {
-        localStorage.setItem("editor-mode", String(!editorMode()));
-        syncEditorMode();
-        render();
-      });
+      const editorToggle = document.getElementById("editor-mode-toggle");
+      if (editorToggle) {
+        editorToggle.addEventListener("click", () => {
+          syncEditorMode();
+          render();
+        });
+      }
 
       syncEditorMode();
       render();
