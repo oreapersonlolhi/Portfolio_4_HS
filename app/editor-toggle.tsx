@@ -6,7 +6,9 @@ export default function EditorToggle() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    setEnabled(localStorage.getItem("portfolio-editor-mode") === "true");
+    const initial = localStorage.getItem("portfolio-editor-mode") === "true";
+    setEnabled(initial);
+    document.body.classList.toggle("editor-mode", initial);
   }, []);
 
   function toggleEditor() {
