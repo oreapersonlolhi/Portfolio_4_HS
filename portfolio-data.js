@@ -642,8 +642,8 @@ window.PORTFOLIO_PROJECTS = [
   {
     "id": "freehand-sketch",
     "title": "Freehand Sketches",
-    "category": "sketching",
-    "categoryLabel": "Sketching",
+    "category": "architecture",
+    "categoryLabel": "Architecture",
     "year": "2026",
     "cover": "public/portfolio/full/freehand-sketch/freehand-sketch-001.jpg",
     "images": [

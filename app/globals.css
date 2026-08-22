@@ -108,7 +108,7 @@ footer p {
 
 nav {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
   margin-top: 48px;
   border-top: 1px solid var(--line);
@@ -124,7 +124,8 @@ nav a {
   border-right: 1px solid var(--line);
 }
 
-nav a:first-child {
+nav a:hover,
+nav a:focus-visible {
   color: var(--blue);
   font-weight: 700;
 }
@@ -275,6 +276,21 @@ footer {
 footer p {
   margin: 4px 0;
   color: var(--blue);
+}
+
+.empty-page {
+  min-height: 70vh;
+}
+
+.empty-page nav {
+  grid-template-columns: 1fr;
+  max-width: 180px;
+}
+
+.empty-canvas {
+  min-height: 50vh;
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
 }
 
 @media (max-width: 900px) {

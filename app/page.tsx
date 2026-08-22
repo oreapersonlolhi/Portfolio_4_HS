@@ -3,13 +3,12 @@ import Image from "next/image";
 type Project = {
   id: string;
   title: string;
-  category: "Architecture" | "Sketching" | "Electronic Engineering";
+  category: "Architecture" | "Electronic Engineering";
   image: string;
   alt: string;
   year: string;
   summary: string;
   notes: string[];
-  featured?: boolean;
 };
 
 const projects: Project[] = [
@@ -27,7 +26,6 @@ const projects: Project[] = [
       "Tested how furniture, circulation, and daylight can make a small room feel usable.",
       "Developed the project through reference images, model views, and final presentation studies.",
     ],
-    featured: true,
   },
   {
     id: "river-house",
@@ -182,7 +180,7 @@ const projects: Project[] = [
   {
     id: "freehand-sketch",
     title: "Freehand Sketches",
-    category: "Sketching",
+    category: "Architecture",
     image: "/portfolio/freehand-sketch.jpg",
     alt: "Freehand sketch study showing observation and drawing practice.",
     year: "2026",
@@ -211,10 +209,14 @@ const projects: Project[] = [
   },
 ];
 
-const featured = projects.find((project) => project.featured) ?? projects[0];
-const galleryProjects = projects.filter((project) => project.title !== featured.title);
-const frontPageProjects = galleryProjects.slice(0, 5);
-const categories = ["Featured", "Architecture", "Sketching", "Electronic Engineering"];
+const frontPageProjects = projects.slice(0, 6);
+const categories = [
+  { label: "About Me", href: "/about" },
+  { label: "Architecture", href: "/category.html?category=architecture" },
+  { label: "Electronic Engineering", href: "/category.html?category=electronic-engineering" },
+  { label: "Sports", href: "/category.html?category=sports" },
+  { label: "Music", href: "/category.html?category=music" },
+];
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -249,14 +251,11 @@ export default function Home() {
   return (
     <main>
       <header className="hero">
-        <p className="eyebrow">Boarding / High-School Application Portfolio</p>
-        <h1>
-          Art / Architecture /<br />
-          Electronic Engineering Portfolio
-        </h1>
+        <p className="eyebrow">Personal Portfolio</p>
+        <h1>Heidi&apos;s Portfolio</h1>
         <div className="intro-row">
           <div>
-            <h2>Heidi Portfolio</h2>
+            <h2>Selected Work</h2>
             <div className="rule" />
           </div>
           <p>
@@ -266,51 +265,12 @@ export default function Home() {
         </div>
         <nav aria-label="Portfolio sections">
           {categories.map((category) => (
-            <a
-              key={category}
-              href={
-                category === "Featured"
-                  ? "#featured"
-                  : `/category.html?category=${category.toLowerCase().replaceAll(" ", "-")}`
-              }
-            >
-              {category}
+            <a key={category.label} href={category.href}>
+              {category.label}
             </a>
           ))}
         </nav>
       </header>
-
-      <section className="featured-section" id="featured" aria-labelledby="featured-title">
-        <a
-          className="featured-image"
-          href="/project.html?project=micro-shelter"
-          aria-label="Open Micro Shelter project gallery"
-        >
-          <Image
-            src={featured.image}
-            alt={featured.alt}
-            fill
-            priority
-            sizes="(max-width: 900px) 100vw, 55vw"
-          />
-        </a>
-        <div className="featured-copy">
-          <p className="section-label">Featured Project</p>
-          <h2 id="featured-title">{featured.title}</h2>
-          <p className="featured-summary">{featured.summary}</p>
-          <div className="notes-label">Process notes</div>
-          <ul>
-            {featured.notes.map((note) => (
-              <li key={note}>{note}</li>
-            ))}
-          </ul>
-          <p>
-            <a className="open-link" href="/project.html?project=micro-shelter">
-              Open project gallery
-            </a>
-          </p>
-        </div>
-      </section>
 
       <section className="category-intro" id="architecture">
         <p className="section-label">Architecture + Physical Work</p>
@@ -326,16 +286,6 @@ export default function Home() {
       <div className="category-link-row">
         <a href="/category.html?category=architecture">See all architecture projects</a>
       </div>
-
-      <section className="timeline-section" id="sketching">
-        <p className="section-label">Chronological Studies</p>
-        <h2>Sketching and Electronic Engineering are arranged as growth tracks.</h2>
-        <p>
-          This first version uses temporary process writing based on folder names
-          and visible file context. Captions are intentionally roomy so each
-          project can be refined with exact titles, materials, and dates.
-        </p>
-      </section>
 
       <footer id="electronic-engineering">
         <p>Thank you for taking the time to explore my work.</p>

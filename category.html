@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfolio Category | Heidi Portfolio</title>
+    <title>Portfolio Category | Heidi's Portfolio</title>
     <link rel="stylesheet" href="portfolio-pages.css" />
   </head>
   <body>
@@ -12,8 +12,9 @@
         <nav aria-label="Category navigation">
           <a href="index.html">Back to home</a>
           <a href="category.html?category=architecture">Architecture</a>
-          <a href="category.html?category=sketching">Sketching</a>
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
+          <a href="category.html?category=sports">Sports</a>
+          <a href="category.html?category=music">Music</a>
         </nav>
       </div>
 
@@ -41,16 +42,18 @@
       const category = params.get("category") || "architecture";
       const titles = {
         architecture: "Architecture + Physical Work",
-        sketching: "Sketching",
-        "electronic-engineering": "Electronic Engineering"
+        "electronic-engineering": "Electronic Engineering",
+        sports: "Sports",
+        music: "Music"
       };
       const copy = {
         architecture: "Models, spatial studies, and physical pieces curated for admissions reviewers.",
-        sketching: "Chronological drawing work showing observation, line quality, and growth.",
-        "electronic-engineering": "Hands-on circuit and prototype work showing systems thinking and making."
+        "electronic-engineering": "Hands-on circuit and prototype work showing systems thinking and making.",
+        sports: "This category is ready for future sports work.",
+        music: "This category is ready for future music work."
       };
 
-      document.title = `${titles[category] || "Portfolio Work"} | Heidi Portfolio`;
+      document.title = `${titles[category] || "Portfolio Work"} | Heidi's Portfolio`;
       document.getElementById("category-title").textContent = titles[category] || "Portfolio Work";
       document.getElementById("category-copy").textContent = copy[category] || copy.architecture;
 

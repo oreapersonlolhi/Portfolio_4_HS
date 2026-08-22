@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Heidi Portfolio | Art / Architecture / Electronic Engineering</title>
+    <title>Heidi's Portfolio</title>
     <style>
       :root {
         --background: #f7efe1;
@@ -526,12 +526,12 @@
     <main>
       <header class="hero">
         <div class="hero-top">
-          <p class="eyebrow">Boarding / High-School Application Portfolio</p>
+          <p class="eyebrow">Personal Portfolio</p>
         </div>
-        <h1>Art / Architecture /<br />Electronic Engineering Portfolio</h1>
+        <h1>Heidi's Portfolio</h1>
         <div class="intro-row">
           <div>
-            <h2>Heidi Portfolio</h2>
+            <h2>Selected Work</h2>
             <div class="rule"></div>
           </div>
           <p>
@@ -540,33 +540,13 @@
           </p>
         </div>
         <nav aria-label="Portfolio sections">
-          <a href="#featured">Featured</a>
+          <a href="about.html">About Me</a>
           <a href="category.html?category=architecture">Architecture</a>
-          <a href="category.html?category=sketching">Sketching</a>
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
+          <a href="category.html?category=sports">Sports</a>
+          <a href="category.html?category=music">Music</a>
         </nav>
       </header>
-
-      <section class="featured-section" id="featured">
-        <a class="featured-image" href="project.html?project=micro-shelter" aria-label="Open Micro Shelter project">
-          <img src="public/portfolio/micro-shelter.jpg" alt="Architectural concept image for a compact Hong Kong micro shelter." />
-        </a>
-        <div class="featured-copy">
-          <p class="section-label">Featured Project</p>
-          <h2>Micro Shelter</h2>
-          <p>
-            A compact housing study exploring privacy, density, and livable
-            space in a small urban footprint.
-          </p>
-          <div class="notes-label">Process notes</div>
-          <ul>
-            <li>Studied Hong Kong micro-living conditions and spatial constraints.</li>
-            <li>Tested how furniture, circulation, and daylight can make a small room feel usable.</li>
-            <li>Developed the project through reference images, model views, and final presentation studies.</li>
-          </ul>
-          <p><a class="open-link" href="project.html?project=micro-shelter">Open project gallery</a></p>
-        </div>
-      </section>
 
       <section class="category-intro" id="architecture">
         <p class="section-label">Architecture + Physical Work</p>
@@ -689,7 +669,7 @@
         <a class="project-card" id="sketching" href="project.html?project=freehand-sketch">
           <div class="project-image-wrap"><img src="public/portfolio/freehand-sketch.jpg" alt="Freehand sketch study." /></div>
           <div class="project-copy">
-            <div class="project-kicker"><span>Sketching</span><span>2026</span></div>
+            <div class="project-kicker"><span>Architecture</span><span>2026</span></div>
             <h3>Freehand Sketches</h3>
             <p>A chronological sketching study showing observation, line confidence, and form exploration.</p>
             <div class="notes-label">Process notes</div>
@@ -833,25 +813,6 @@
         return visible[0] || project.cover;
       }
 
-      function renderFeatured(project) {
-        const title = savedProjectTitle(project.id);
-        const summary = savedProjectSummary(project.id);
-        const notes = savedProjectNotes(project.id).slice(0, 3);
-        document.getElementById("featured").innerHTML = `
-          <a class="featured-image" href="project.html?project=${project.id}" aria-label="Open ${escapeHTML(title)} project">
-            <img src="${homeImage(project)}" alt="${escapeHTML(title)}" />
-          </a>
-          <div class="featured-copy">
-            <p class="section-label">Featured Project</p>
-            <h2>${escapeHTML(title)}</h2>
-            <p>${escapeHTML(summary)}</p>
-            <div class="notes-label">Process notes</div>
-            <ul>${notes.map((note) => `<li>${escapeHTML(note)}</li>`).join("")}</ul>
-            <p><a class="open-link" href="project.html?project=${project.id}">Open project gallery</a></p>
-          </div>
-        `;
-      }
-
       function projectCard(project) {
         const title = savedProjectTitle(project.id);
         const summary = savedProjectSummary(project.id);
@@ -873,9 +834,7 @@
 
       function renderHome() {
         const selectedProjects = selectedHomeProjectIds().map(projectById).filter(Boolean);
-        const featured = selectedProjects[0] || window.PORTFOLIO_PROJECTS[0];
-        renderFeatured(featured);
-        document.getElementById("home-project-grid").innerHTML = selectedProjects.slice(1, 6).map(projectCard).join("");
+        document.getElementById("home-project-grid").innerHTML = selectedProjects.slice(0, 6).map(projectCard).join("");
         renderHomeEditor(selectedProjects.map((project) => project.id));
         syncEditorMode();
       }

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Heidi Portfolio | Art / Architecture / Electronic Engineering",
+  title: "Heidi's Portfolio",
   description:
-    "A spacious admissions portfolio of selected art, architecture, sketching, and Electronic Engineering projects.",
+    "Heidi's personal portfolio of architecture, electronic engineering, sports, and music.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
