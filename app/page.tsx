@@ -216,7 +216,6 @@ const categories = [
   { label: "Electronic Engineering", href: "/category.html?category=electronic-engineering" },
   { label: "Sports", href: "/category.html?category=sports" },
   { label: "Music", href: "/category.html?category=music" },
-  { label: "Editor", href: "/admin" },
 ];
 
 function ProjectCard({ project }: { project: Project }) {
@@ -271,6 +270,9 @@ export default function Home() {
             </a>
           ))}
         </nav>
+        <a className="editor-icon" href="/admin" aria-label="Open portfolio editor" title="Portfolio editor">
+          <span aria-hidden="true">🔧</span>
+        </a>
       </header>
 
       <section className="category-intro" id="architecture">

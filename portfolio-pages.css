@@ -155,6 +155,19 @@ body:not(.editor-mode) .editor-only {
   display: none !important;
 }
 
+.editor-icon {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--foreground);
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
 .page-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);

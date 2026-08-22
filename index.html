@@ -228,6 +228,20 @@
         display: none !important;
       }
 
+      .editor-icon {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        margin: 20px 0 0 auto;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--paper);
+        color: var(--foreground);
+        font-size: 1.05rem;
+        text-decoration: none;
+      }
+
       .featured-section {
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.9fr);
@@ -544,8 +558,8 @@
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
           <a href="category.html?category=sports">Sports</a>
           <a href="category.html?category=music">Music</a>
-          <a href="admin.html">Editor</a>
         </nav>
+        <a class="editor-icon" href="admin.html" aria-label="Open portfolio editor" title="Portfolio editor">🔧</a>
       </header>
 
       <section class="category-intro" id="architecture">
