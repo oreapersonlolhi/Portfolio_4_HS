@@ -41,6 +41,7 @@ main {
 }
 
 .hero {
+  position: relative;
   padding: 8px 0 32px;
   border-bottom: 1px solid var(--line);
 }
@@ -349,11 +350,19 @@ footer p {
   font-weight: 700;
 }
 
-.editor-icon {
+.corner-tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+
+.tool-icon {
   display: grid;
   width: 38px;
   height: 38px;
-  margin: 20px 0 0 auto;
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 50%;
@@ -363,10 +372,63 @@ footer p {
   text-decoration: none;
 }
 
-.editor-icon:hover,
-.editor-icon:focus-visible {
+.tool-icon:hover,
+.tool-icon:focus-visible {
   border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(36, 87, 122, 0.12);
+}
+
+.category-menu {
+  position: relative;
+}
+
+.category-menu summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.category-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-lines {
+  display: grid;
+  gap: 4px;
+}
+
+.menu-lines i {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.category-menu nav {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  display: grid;
+  width: min(260px, calc(100vw - 32px));
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 14px 35px rgba(23, 26, 31, 0.12);
+}
+
+.category-menu nav a {
+  display: block;
+  padding: 12px;
+  border: 0;
+  text-align: left;
+}
+
+.about-link {
+  display: inline-block;
+  margin-top: 32px;
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 @media (max-width: 900px) {

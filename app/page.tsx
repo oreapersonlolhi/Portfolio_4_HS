@@ -217,7 +217,6 @@ const categories = [
   { label: "Sports", href: "/category.html?category=sports" },
   { label: "Music", href: "/category.html?category=music" },
 ];
-
 function ProjectCard({ project }: { project: Project }) {
   return (
     <a
@@ -251,6 +250,22 @@ export default function Home() {
   return (
     <main>
       <header className="hero">
+        <div className="corner-tools">
+          <a className="tool-icon" href="/admin" aria-label="Open portfolio editor" title="Portfolio editor">
+            <span aria-hidden="true">🔧</span>
+          </a>
+          <details className="category-menu">
+            <summary className="tool-icon" aria-label="Open category menu" title="Categories">
+              <span aria-hidden="true" className="menu-lines"><i /><i /><i /></span>
+            </summary>
+            <nav aria-label="Portfolio categories">
+              <a href="/category.html?category=architecture">Architecture</a>
+              <a href="/category.html?category=electronic-engineering">Electronic Engineering</a>
+              <a href="/category.html?category=sports">Sports</a>
+              <a href="/category.html?category=music">Music</a>
+            </nav>
+          </details>
+        </div>
         <p className="eyebrow">Personal Portfolio</p>
         <h1>Heidi&apos;s Portfolio</h1>
         <div className="intro-row">
@@ -265,14 +280,9 @@ export default function Home() {
         </div>
         <nav aria-label="Portfolio sections">
           {categories.map((category) => (
-            <a key={category.label} href={category.href}>
-              {category.label}
-            </a>
+            <a key={category.label} href={category.href}>{category.label}</a>
           ))}
         </nav>
-        <a className="editor-icon" href="/admin" aria-label="Open portfolio editor" title="Portfolio editor">
-          <span aria-hidden="true">🔧</span>
-        </a>
       </header>
 
       <section className="category-intro" id="architecture">
