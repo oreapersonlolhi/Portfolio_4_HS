@@ -14,6 +14,7 @@ export default function EditorToggle() {
     localStorage.setItem("portfolio-editor-mode", String(next));
     setEnabled(next);
     document.body.classList.toggle("editor-mode", next);
+    window.dispatchEvent(new CustomEvent("portfolio-editor-change", { detail: next }));
   }
 
   return (

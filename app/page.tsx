@@ -1,5 +1,6 @@
 import Image from "next/image";
 import EditorToggle from "./editor-toggle";
+import HomepageEditor, { EditableHomepageTitle } from "./homepage-editor";
 
 type Project = {
   id: string;
@@ -259,7 +260,7 @@ export default function Home() {
           </details>
         </div>
         <p className="eyebrow">Personal Portfolio</p>
-        <h1>Heidi&apos;s Portfolio</h1>
+        <EditableHomepageTitle />
         <div className="intro-row">
           <div>
             <h2>Selected Work</h2>
@@ -286,6 +287,8 @@ export default function Home() {
       <div className="category-link-row">
         <a href="/category.html?category=architecture">See all architecture projects</a>
       </div>
+
+      <HomepageEditor />
 
       <footer id="electronic-engineering">
         <p>Thank you for taking the time to explore my work.</p>
