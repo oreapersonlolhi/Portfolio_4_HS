@@ -251,24 +251,30 @@
         text-decoration: none;
       }
 
-      .category-menu { position: relative; }
+      .category-menu { position: static; }
       .category-menu summary { list-style: none; cursor: pointer; }
       .category-menu summary::-webkit-details-marker { display: none; }
       .menu-lines { display: grid; gap: 4px; }
       .menu-lines i { display: block; width: 16px; height: 1.5px; background: currentColor; }
       .category-menu nav {
-        position: absolute;
-        top: 46px;
-        right: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
         display: grid;
-        width: 250px;
+        grid-template-columns: repeat(4, 1fr);
+        width: 100%;
         margin: 0;
-        padding: 8px;
-        border: 1px solid var(--line);
+        padding: 88px max(24px, calc((100vw - 1120px) / 2)) 36px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
         background: var(--paper);
         box-shadow: 0 14px 35px rgba(23, 26, 31, 0.12);
+        transform: translateY(-110%);
+        transition: transform 240ms ease;
       }
-      .category-menu nav a { display: block; padding: 12px; border: 0; text-align: left; }
+      .category-menu[open] nav { transform: translateY(0); }
+      .category-menu nav a { display: block; padding: 12px; border: 0; text-align: center; }
 
       .featured-section {
         display: grid;
@@ -592,13 +598,6 @@
             and the creative process behind making things by hand.
           </p>
         </div>
-        <nav aria-label="Portfolio sections">
-          <a href="about.html">About Me</a>
-          <a href="category.html?category=architecture">Architecture</a>
-          <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
-          <a href="category.html?category=sports">Sports</a>
-          <a href="category.html?category=music">Music</a>
-        </nav>
       </header>
 
       <section class="category-intro" id="architecture">

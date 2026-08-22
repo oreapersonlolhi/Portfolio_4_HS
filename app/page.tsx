@@ -210,13 +210,6 @@ const projects: Project[] = [
 ];
 
 const frontPageProjects = projects.slice(0, 6);
-const categories = [
-  { label: "About Me", href: "/about" },
-  { label: "Architecture", href: "/category.html?category=architecture" },
-  { label: "Electronic Engineering", href: "/category.html?category=electronic-engineering" },
-  { label: "Sports", href: "/category.html?category=sports" },
-  { label: "Music", href: "/category.html?category=music" },
-];
 function ProjectCard({ project }: { project: Project }) {
   return (
     <a
@@ -278,11 +271,6 @@ export default function Home() {
             and the creative process behind making things by hand.
           </p>
         </div>
-        <nav aria-label="Portfolio sections">
-          {categories.map((category) => (
-            <a key={category.label} href={category.href}>{category.label}</a>
-          ))}
-        </nav>
       </header>
 
       <section className="category-intro" id="architecture">
