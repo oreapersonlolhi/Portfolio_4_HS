@@ -254,6 +254,7 @@ export default function Home() {
               <span aria-hidden="true" className="menu-lines"><i /><i /><i /></span>
             </summary>
             <nav aria-label="Portfolio categories">
+              <a href="/">Main Page</a>
               <a href="/category.html?category=architecture">Architecture</a>
               <a href="/category.html?category=electronic-engineering">Electronic Engineering</a>
               <a href="/category.html?category=sports">Sports</a>

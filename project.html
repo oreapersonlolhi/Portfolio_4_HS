@@ -12,6 +12,7 @@
       <details class="category-menu">
         <summary class="tool-icon" aria-label="Open category menu" title="Categories"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <nav aria-label="Portfolio categories">
+          <a href="index.html">Main Page</a>
           <a href="category.html?category=architecture">Architecture</a>
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
           <a href="category.html?category=sports">Sports</a>
@@ -36,6 +37,7 @@
 
     <script src="portfolio-data.js"></script>
     <script src="inline-editor.js" defer></script>
+    <script src="page-content-editor.js" defer></script>
     <script>
       const params = new URLSearchParams(window.location.search);
       const projectId = params.get("project") || "micro-shelter";
