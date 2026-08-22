@@ -15,6 +15,7 @@
           <a href="category.html?category=electronic-engineering">Electronic Engineering</a>
           <a href="category.html?category=sports">Sports</a>
           <a href="category.html?category=music">Music</a>
+          <a href="admin.html">Editor</a>
         </nav>
       </div>
 
@@ -58,12 +59,12 @@
       document.getElementById("category-copy").textContent = copy[category] || copy.architecture;
 
       function editorMode() {
-        return false;
+        return localStorage.getItem("portfolio-editor-mode") === "true";
       }
 
       function syncEditorMode() {
-        const enabled = false;
-        document.body.classList.remove("editor-mode");
+        const enabled = editorMode();
+        document.body.classList.toggle("editor-mode", enabled);
         const toggle = document.getElementById("editor-mode-toggle");
         if (toggle) {
           toggle.setAttribute("aria-pressed", String(enabled));

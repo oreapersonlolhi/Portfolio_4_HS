@@ -39,12 +39,12 @@
       document.getElementById("category-link").textContent = `Back to ${project.categoryLabel}`;
 
       function editorMode() {
-        return false;
+        return localStorage.getItem("portfolio-editor-mode") === "true";
       }
 
       function syncEditorMode() {
-        const enabled = false;
-        document.body.classList.remove("editor-mode");
+        const enabled = editorMode();
+        document.body.classList.toggle("editor-mode", enabled);
         const toggle = document.getElementById("editor-mode-toggle");
         if (toggle) {
           toggle.setAttribute("aria-pressed", String(enabled));

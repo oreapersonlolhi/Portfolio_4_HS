@@ -216,6 +216,7 @@ const categories = [
   { label: "Electronic Engineering", href: "/category.html?category=electronic-engineering" },
   { label: "Sports", href: "/category.html?category=sports" },
   { label: "Music", href: "/category.html?category=music" },
+  { label: "Editor", href: "/admin" },
 ];
 
 function ProjectCard({ project }: { project: Project }) {
