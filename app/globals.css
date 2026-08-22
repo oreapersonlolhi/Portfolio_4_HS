@@ -438,6 +438,17 @@ footer p {
   background: #e9f1f6;
 }
 
+.inline-editable {
+  outline: 1px dashed rgba(36, 87, 122, 0.55);
+  outline-offset: 4px;
+  cursor: text;
+}
+
+.inline-editable:focus {
+  outline: 2px solid var(--blue);
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .tool-icon:hover,
 .tool-icon:focus-visible {
   border-color: var(--blue);

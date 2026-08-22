@@ -1,6 +1,7 @@
 import Image from "next/image";
 import EditorToggle from "./editor-toggle";
 import HomepageEditor, { EditableHomepageTitle } from "./homepage-editor";
+import InlineTextEditor from "./inline-text-editor";
 
 type Project = {
   id: string;
@@ -244,6 +245,7 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Home() {
   return (
     <main>
+      <InlineTextEditor />
       <header className="hero">
         <div className="corner-tools">
           <EditorToggle />

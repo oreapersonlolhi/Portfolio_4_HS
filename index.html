@@ -312,6 +312,8 @@
       .custom-item-editor { display: grid; gap: 8px; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
       .custom-item-editor label { font-size: .82rem; font-weight: 700; }
       .custom-item-editor button { justify-self: start; background: #7b3434; }
+      .inline-editable { outline: 1px dashed rgba(36, 87, 122, .55); outline-offset: 4px; cursor: text; }
+      .inline-editable:focus { outline: 2px solid var(--blue); background: rgba(255,255,255,.75); }
 
       .featured-section {
         display: grid;
@@ -815,6 +817,7 @@
       </footer>
     </main>
     <script src="portfolio-data.js"></script>
+    <script src="inline-editor.js" defer></script>
     <script>
       const DEFAULT_HOME_PROJECTS = [
         "micro-shelter",
