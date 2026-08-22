@@ -280,6 +280,39 @@
       .category-menu[open] nav { transform: translateY(0); }
       .category-menu nav a { display: block; padding: 12px; border: 0; text-align: center; }
 
+      .inline-title-editor,
+      .custom-home-editor {
+        margin-top: 24px;
+        padding: 22px;
+        border: 1px dashed var(--blue);
+        background: #f4f8fa;
+      }
+      .inline-title-editor label,
+      .custom-home-editor h3 { display: block; margin: 0 0 8px; font-weight: 700; }
+      .inline-title-editor div,
+      .custom-editor-forms { display: grid; gap: 12px; }
+      .inline-title-editor div { grid-template-columns: 1fr auto; }
+      .custom-editor-forms { grid-template-columns: repeat(3, 1fr); }
+      .custom-editor-forms form { display: grid; align-content: start; gap: 10px; }
+      .inline-title-editor input,
+      .custom-home-editor input,
+      .custom-home-editor textarea,
+      .custom-item-editor input,
+      .custom-item-editor textarea { width: 100%; padding: 10px; border: 1px solid var(--line); background: white; color: var(--foreground); font: inherit; }
+      .inline-title-editor button,
+      .custom-home-editor button,
+      .custom-item-editor button { padding: 10px 14px; border: 0; background: var(--blue); color: white; font: inherit; font-weight: 700; cursor: pointer; }
+      .custom-home-grid { display: grid; gap: 28px; padding: 42px 0; }
+      .custom-home-grid:empty { display: none; }
+      .custom-home-item { overflow: hidden; border: 1px solid var(--line); background: var(--paper); }
+      .custom-home-item > img { display: block; width: 100%; max-height: 520px; object-fit: cover; }
+      .custom-item-copy { padding: 24px; }
+      .custom-item-copy h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; font-weight: 400; }
+      .custom-item-copy p { color: var(--muted); line-height: 1.7; }
+      .custom-item-editor { display: grid; gap: 8px; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+      .custom-item-editor label { font-size: .82rem; font-weight: 700; }
+      .custom-item-editor button { justify-self: start; background: #7b3434; }
+
       .featured-section {
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.9fr);
@@ -570,6 +603,7 @@
         .home-image-choice {
           grid-template-columns: 1fr;
         }
+        .custom-editor-forms { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -591,7 +625,11 @@
         <div class="hero-top">
           <p class="eyebrow">Personal Portfolio</p>
         </div>
-        <h1>Heidi's Portfolio</h1>
+        <h1 id="main-portfolio-title">Heidi's Portfolio</h1>
+        <form class="inline-title-editor editor-only" id="main-title-form">
+          <label for="main-title-input">Main portfolio title</label>
+          <div><input id="main-title-input" type="text"><button type="submit">Save title</button></div>
+        </form>
         <div class="intro-row">
           <div>
             <h2>Selected Work</h2>
@@ -750,6 +788,17 @@
         <a href="category.html?category=architecture">See all architecture projects</a>
       </div>
 
+      <section class="custom-home-editor editor-only" aria-label="Add homepage content">
+        <p class="section-label">Editor mode</p>
+        <h2>Add something to your homepage</h2>
+        <div class="custom-editor-forms">
+          <form id="add-text-form"><h3>Text section</h3><input name="title" placeholder="Section title"><textarea name="body" rows="4" placeholder="Write your text"></textarea><button type="submit">Add text</button></form>
+          <form id="add-picture-form"><h3>Picture</h3><input name="title" placeholder="Picture caption"><input name="image" required placeholder="Image URL or public/portfolio/image.jpg"><button type="submit">Add picture</button></form>
+          <form id="add-project-form"><h3>Project</h3><input name="title" required placeholder="Project title"><input name="category" placeholder="Category"><input name="image" required placeholder="Image URL or public/portfolio/image.jpg"><textarea name="body" rows="3" placeholder="Project description"></textarea><button type="submit">Add project</button></form>
+        </div>
+      </section>
+      <section class="custom-home-grid" id="custom-home-grid" aria-label="Custom homepage content"></section>
+
       <section class="timeline-section">
         <p class="section-label">Caption Drafting Note</p>
         <h2>Roomy process notes are built in for every project.</h2>
@@ -776,6 +825,8 @@
         "contemporary-museum"
       ];
       const HOME_PROJECTS_KEY = "home-projects";
+      const MAIN_TITLE_KEY = "portfolio-main-title";
+      const CUSTOM_ITEMS_KEY = "portfolio-home-custom-items";
 
       function escapeHTML(value) {
         return String(value)
@@ -798,6 +849,54 @@
         localStorage.setItem("portfolio-editor-mode", String(!editorMode()));
         syncEditorMode();
         renderHome();
+      }
+
+      function customItems() {
+        try { return JSON.parse(localStorage.getItem(CUSTOM_ITEMS_KEY)) || []; }
+        catch { return []; }
+      }
+
+      function saveCustomItems(items) {
+        localStorage.setItem(CUSTOM_ITEMS_KEY, JSON.stringify(items));
+        renderCustomItems();
+      }
+
+      function customId() {
+        return self.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+      }
+
+      function renderMainTitle() {
+        const title = localStorage.getItem(MAIN_TITLE_KEY) || "Heidi's Portfolio";
+        document.getElementById("main-portfolio-title").textContent = title;
+        document.getElementById("main-title-input").value = title;
+      }
+
+      function renderCustomItems() {
+        const items = customItems();
+        document.getElementById("custom-home-grid").innerHTML = items.map((item) => `
+          <article class="custom-home-item custom-${item.type}" data-id="${item.id}">
+            ${item.image ? `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.title || "Portfolio image")}">` : ""}
+            <div class="custom-item-copy">
+              ${item.category ? `<p class="project-kicker">${escapeHTML(item.category)}</p>` : ""}
+              <h2>${escapeHTML(item.title)}</h2>
+              ${item.body ? `<p>${escapeHTML(item.body)}</p>` : ""}
+              <div class="custom-item-editor editor-only">
+                <label>Title<input data-field="title" value="${escapeHTML(item.title)}"></label>
+                ${"body" in item ? `<label>Text<textarea data-field="body" rows="3">${escapeHTML(item.body || "")}</textarea></label>` : ""}
+                ${item.image ? `<label>Image<input data-field="image" value="${escapeHTML(item.image)}"></label>` : ""}
+                <button type="button" data-remove>Remove</button>
+              </div>
+            </div>
+          </article>
+        `).join("");
+
+        document.querySelectorAll(".custom-home-item").forEach((card) => {
+          card.querySelectorAll("[data-field]").forEach((input) => input.addEventListener("change", () => {
+            const next = customItems().map((item) => item.id === card.dataset.id ? { ...item, [input.dataset.field]: input.value } : item);
+            saveCustomItems(next);
+          }));
+          card.querySelector("[data-remove]")?.addEventListener("click", () => saveCustomItems(customItems().filter((item) => item.id !== card.dataset.id)));
+        });
       }
 
       function syncEditorMode() {
@@ -992,7 +1091,28 @@
         button.addEventListener("click", toggleEditorMode);
       });
 
+      document.getElementById("main-title-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const title = document.getElementById("main-title-input").value.trim();
+        if (title) { localStorage.setItem(MAIN_TITLE_KEY, title); renderMainTitle(); }
+      });
+
+      document.getElementById("add-text-form").addEventListener("submit", (event) => {
+        event.preventDefault(); const data = new FormData(event.currentTarget);
+        saveCustomItems([...customItems(), { id: customId(), type: "text", title: data.get("title")?.trim() || "New section", body: data.get("body")?.trim() || "" }]); event.currentTarget.reset();
+      });
+      document.getElementById("add-picture-form").addEventListener("submit", (event) => {
+        event.preventDefault(); const data = new FormData(event.currentTarget);
+        saveCustomItems([...customItems(), { id: customId(), type: "image", title: data.get("title")?.trim() || "", image: data.get("image")?.trim() || "" }]); event.currentTarget.reset();
+      });
+      document.getElementById("add-project-form").addEventListener("submit", (event) => {
+        event.preventDefault(); const data = new FormData(event.currentTarget);
+        saveCustomItems([...customItems(), { id: customId(), type: "project", title: data.get("title")?.trim() || "New project", category: data.get("category")?.trim() || "Architecture", image: data.get("image")?.trim() || "", body: data.get("body")?.trim() || "" }]); event.currentTarget.reset();
+      });
+
       syncEditorMode();
+      renderMainTitle();
+      renderCustomItems();
       renderHome();
     </script>
   </body>
