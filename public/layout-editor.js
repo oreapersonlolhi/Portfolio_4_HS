@@ -17,7 +17,7 @@
     .layout-editor-toolbar{position:fixed;left:50%;bottom:18px;z-index:1002;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);padding:10px 12px;transform:translateX(-50%);border:1px solid #d9d4c9;border-radius:8px;background:#fffdf8;box-shadow:0 10px 32px rgba(23,26,31,.18);font:14px Arial,sans-serif}
     .layout-editor-toolbar button{padding:8px 10px;border:1px solid #d9d4c9;background:white;color:#24577a;font:inherit;font-weight:700;cursor:pointer}.layout-editor-toolbar button.active{background:#24577a;color:white}.layout-editor-toolbar span{color:#6c716d;font-size:12px}
     .freeform-layout-canvas{position:absolute;inset:0 0 auto 0;z-index:900;min-height:100%;pointer-events:none}.freeform-layout-canvas.drawing{pointer-events:auto;cursor:crosshair;background:rgba(36,87,122,.025)}
-    .freeform-item{position:absolute;z-index:1;min-width:60px;min-height:40px;overflow:auto;background:rgba(255,253,248,.94)}body.editor-mode .freeform-item{pointer-events:auto;resize:both;outline:1px dashed #24577a}.freeform-item img{display:block;width:100%;height:100%;object-fit:cover}.freeform-text{padding:10px;white-space:pre-wrap}.freeform-remove{position:absolute;top:4px;right:4px;z-index:2;display:none;width:24px;height:24px;border:0;border-radius:50%;background:#7b3434;color:white;cursor:pointer}body.editor-mode .freeform-remove{display:block}.freeform-draft{border:2px solid #24577a;background:rgba(36,87,122,.12)}
+    .freeform-item{position:absolute;z-index:1;min-width:60px;min-height:40px;overflow:auto;background:rgba(255,253,248,.94)}body.editor-mode .freeform-item{pointer-events:auto;resize:both;outline:1px dashed #24577a}.freeform-item img{display:block;width:100%;height:100%;object-fit:cover}.freeform-text{padding:38px 10px 10px;white-space:pre-wrap}.freeform-remove{position:absolute;top:6px;right:6px;z-index:3;display:none;padding:5px 8px;border:0;border-radius:4px;background:#7b3434;color:white;font:700 11px Arial,sans-serif;cursor:pointer}body.editor-mode .freeform-remove{display:block}.freeform-draft{border:2px solid #24577a;background:rgba(36,87,122,.12)}
     body:not(.editor-mode) .layout-editor-toolbar{display:none!important}@media(max-width:700px){.layout-editor-toolbar{align-items:stretch;flex-wrap:wrap}.layout-editor-toolbar span{width:100%}}
   `;
   document.head.appendChild(style);
@@ -46,7 +46,7 @@
       } else {
         const image = document.createElement("img"); image.src = item.content; image.alt = item.alt || "Portfolio image"; box.appendChild(image);
       }
-      const remove = document.createElement("button"); remove.className = "freeform-remove"; remove.type = "button"; remove.textContent = "×"; remove.setAttribute("aria-label", "Remove item");
+      const remove = document.createElement("button"); remove.className = "freeform-remove"; remove.type = "button"; remove.textContent = "Remove"; remove.setAttribute("aria-label", `Remove ${item.type} box`);
       remove.addEventListener("click", () => save(items().filter((current) => current.id !== item.id))); box.appendChild(remove);
       box.addEventListener("pointerup", () => {
         if (!document.body.classList.contains("editor-mode")) return;
