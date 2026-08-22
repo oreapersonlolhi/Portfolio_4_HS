@@ -1,4 +1,5 @@
 import Image from "next/image";
+import EditorToggle from "./editor-toggle";
 
 type Project = {
   id: string;
@@ -244,9 +245,7 @@ export default function Home() {
     <main>
       <header className="hero">
         <div className="corner-tools">
-          <a className="tool-icon" href="/admin" aria-label="Open portfolio editor" title="Portfolio editor">
-            <span aria-hidden="true">🔧</span>
-          </a>
+          <EditorToggle />
           <details className="category-menu">
             <summary className="tool-icon" aria-label="Open category menu" title="Categories">
               <span aria-hidden="true" className="menu-lines"><i /><i /><i /></span>

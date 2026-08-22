@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="corner-tools">
-      <a class="tool-icon" href="admin.html" aria-label="Open portfolio editor" title="Portfolio editor">🔧</a>
+      <button class="tool-icon editor-toggle" type="button" aria-label="Turn on portfolio editor" aria-pressed="false" title="Turn editor on">🔧</button>
       <details class="category-menu">
         <summary class="tool-icon" aria-label="Open category menu" title="Categories"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <nav aria-label="Portfolio categories">
@@ -54,9 +54,19 @@
         return localStorage.getItem("portfolio-editor-mode") === "true";
       }
 
+      function toggleEditorMode() {
+        localStorage.setItem("portfolio-editor-mode", String(!editorMode()));
+        render();
+      }
+
       function syncEditorMode() {
         const enabled = editorMode();
         document.body.classList.toggle("editor-mode", enabled);
+        document.querySelectorAll(".editor-toggle").forEach((button) => {
+          button.setAttribute("aria-pressed", String(enabled));
+          button.setAttribute("aria-label", enabled ? "Turn off portfolio editor" : "Turn on portfolio editor");
+          button.title = enabled ? "Turn editor off" : "Turn editor on";
+        });
         const toggle = document.getElementById("editor-mode-toggle");
         if (toggle) {
           toggle.setAttribute("aria-pressed", String(enabled));
@@ -328,6 +338,13 @@
 
       syncEditorMode();
       render();
+      document.querySelectorAll(".editor-toggle").forEach((button) => {
+        button.setAttribute("aria-pressed", String(editorMode()));
+        button.addEventListener("click", () => {
+          toggleEditorMode();
+          button.setAttribute("aria-pressed", String(editorMode()));
+        });
+      });
     </script>
   </body>
 </html>

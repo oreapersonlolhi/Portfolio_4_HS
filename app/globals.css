@@ -370,6 +370,13 @@ footer p {
   color: var(--foreground);
   font-size: 1.05rem;
   text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tool-icon[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: #e9f1f6;
 }
 
 .tool-icon:hover,
@@ -409,7 +416,8 @@ footer p {
   left: 0;
   z-index: -1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: minmax(220px, 360px);
+  justify-content: center;
   width: 100%;
   margin: 0;
   padding: 88px max(24px, calc((100vw - 1120px) / 2)) 36px;
@@ -485,10 +493,7 @@ footer p {
     grid-template-columns: 1fr;
   }
 
-  .category-menu nav {
-    grid-template-columns: 1fr;
-    padding-top: 78px;
-  }
+  .category-menu nav { padding-top: 78px; }
 
   nav a {
     border-right: 0;

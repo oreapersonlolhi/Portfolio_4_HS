@@ -175,7 +175,10 @@ body:not(.editor-mode) .editor-only {
   color: var(--foreground);
   font-size: 1.05rem;
   text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
 }
+.tool-icon[aria-pressed="true"] { border-color: var(--blue); background: #e9f1f6; }
 
 .category-menu { position: static; }
 .category-menu summary { list-style: none; cursor: pointer; }
@@ -188,7 +191,8 @@ body:not(.editor-mode) .editor-only {
   left: 0;
   z-index: -1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: minmax(220px, 360px);
+  justify-content: center;
   width: 100%;
   padding: 88px max(24px, calc((100vw - 1180px) / 2)) 36px;
   border: 0;
@@ -202,7 +206,7 @@ body:not(.editor-mode) .editor-only {
 .category-menu nav a { display: block; padding: 12px; border: 0; text-align: center; }
 
 @media (max-width: 640px) {
-  .category-menu nav { grid-template-columns: 1fr; padding-top: 78px; }
+  .category-menu nav { padding-top: 78px; }
 }
 
 .page-head {
