@@ -2,6 +2,7 @@ import Image from "next/image";
 import EditorToggle from "./editor-toggle";
 import HomepageEditor, { EditableHomepageTitle } from "./homepage-editor";
 import InlineTextEditor from "./inline-text-editor";
+import CategoryCovers from "./category-covers";
 
 type Project = {
   id: string;
@@ -287,24 +288,7 @@ export default function Home() {
           <p className="section-label">02 / Projects</p>
           <h2 id="work-title">Explore My Work</h2>
         </div>
-        <div className="category-cover-grid">
-          <a className="category-cover" href="/category.html?category=architecture">
-            <Image src="/portfolio/river-house.png" alt="Architecture project" fill sizes="(max-width: 760px) 100vw, 50vw" />
-            <span>Architecture</span>
-          </a>
-          <a className="category-cover" href="/category.html?category=electronic-engineering">
-            <Image src="/portfolio/circuits.jpg" alt="Electronic engineering project" fill sizes="(max-width: 760px) 100vw, 50vw" />
-            <span>Electronic Engineering</span>
-          </a>
-          <a className="category-cover" href="/category.html?category=music">
-            <Image src="/portfolio/bloom-nest.jpg" alt="Temporary cover for music projects" fill sizes="(max-width: 760px) 100vw, 50vw" />
-            <span>Music</span>
-          </a>
-          <a className="category-cover" href="/category.html?category=sports">
-            <Image src="/portfolio/bridge.jpg" alt="Temporary cover for sports projects" fill sizes="(max-width: 760px) 100vw, 50vw" />
-            <span>Sports</span>
-          </a>
-        </div>
+        <CategoryCovers />
       </section>
 
       <HomepageEditor />

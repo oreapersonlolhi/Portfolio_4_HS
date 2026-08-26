@@ -323,11 +323,17 @@
       .home-section-heading { margin-bottom: 30px; }
       .home-section-heading .section-label { margin-bottom: 12px; }
       .category-cover-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
-      .category-cover { position: relative; min-height: 360px; overflow: hidden; background: #dcd8ce; color: white; text-decoration: none; }
-      .category-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 42%,rgba(10,16,20,.72)); }
-      .category-cover img { width:100%; height:100%; object-fit:cover; transition:transform 300ms ease; }
+      .category-cover-card { min-width:0; }
+      .category-cover { position: relative; display:block; min-height: 360px; overflow: hidden; background: #dcd8ce; color: white; text-decoration: none; }
+      .category-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 42%,rgba(10,16,20,.72)); pointer-events:none; }
+      .category-image-strip { position:absolute; inset:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:thin; }
+      .category-image-strip img { flex:0 0 100%; width:100%; height:100%; object-fit:cover; scroll-snap-align:start; transition:transform 300ms ease; }
       .category-cover:hover img, .category-cover:focus-visible img { transform:scale(1.035); }
-      .category-cover span { position:absolute; right:24px; bottom:22px; left:24px; z-index:1; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.65rem,3vw,2.4rem); }
+      .category-cover-label { position:absolute; right:24px; bottom:22px; left:24px; z-index:1; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.65rem,3vw,2.4rem); }
+      .cover-editor { display:grid; gap:8px; margin-top:10px; padding:14px; border:1px dashed var(--blue); background:#f4f8fa; }
+      .cover-editor label { font-size:.82rem; font-weight:700; }
+      .cover-editor textarea { width:100%; padding:9px; border:1px solid var(--line); background:white; font:inherit; }
+      .cover-editor button { justify-self:start; padding:9px 12px; border:0; background:var(--blue); color:white; font:inherit; font-weight:700; cursor:pointer; }
 
       .featured-section {
         display: grid;
@@ -672,10 +678,10 @@
           <h2 id="work-title">Explore My Work</h2>
         </div>
         <div class="category-cover-grid">
-          <a class="category-cover" href="category.html?category=architecture"><img src="public/portfolio/river-house.png" alt="Architecture project"><span>Architecture</span></a>
-          <a class="category-cover" href="category.html?category=electronic-engineering"><img src="public/portfolio/circuits.jpg" alt="Electronic engineering project"><span>Electronic Engineering</span></a>
-          <a class="category-cover" href="category.html?category=music"><img src="public/portfolio/bloom-nest.jpg" alt="Temporary cover for music projects"><span>Music</span></a>
-          <a class="category-cover" href="category.html?category=sports"><img src="public/portfolio/bridge.jpg" alt="Temporary cover for sports projects"><span>Sports</span></a>
+          <article class="category-cover-card" data-category="architecture" data-label="Architecture" data-default-images="public/portfolio/river-house.png"><a class="category-cover" href="category.html?category=architecture"><span class="category-image-strip"></span><span class="category-cover-label">Architecture</span></a></article>
+          <article class="category-cover-card" data-category="electronic-engineering" data-label="Electronic Engineering" data-default-images="public/portfolio/circuits.jpg"><a class="category-cover" href="category.html?category=electronic-engineering"><span class="category-image-strip"></span><span class="category-cover-label">Electronic Engineering</span></a></article>
+          <article class="category-cover-card" data-category="music" data-label="Music" data-default-images="public/portfolio/bloom-nest.jpg"><a class="category-cover" href="category.html?category=music"><span class="category-image-strip"></span><span class="category-cover-label">Music</span></a></article>
+          <article class="category-cover-card" data-category="sports" data-label="Sports" data-default-images="public/portfolio/bridge.jpg"><a class="category-cover" href="category.html?category=sports"><span class="category-image-strip"></span><span class="category-cover-label">Sports</span></a></article>
         </div>
       </section>
 
@@ -853,6 +859,7 @@
     </main>
     <script src="portfolio-data.js"></script>
     <script src="inline-editor.js" defer></script>
+    <script src="home-category-covers.js" defer></script>
     <script>
       const DEFAULT_HOME_PROJECTS = [
         "micro-shelter",
