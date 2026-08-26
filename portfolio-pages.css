@@ -406,6 +406,43 @@ ul {
   line-height: 1.55;
 }
 
+.note-editor-list {
+  display: grid;
+  gap: 9px;
+}
+
+.note-editor-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+}
+
+.note-bullet {
+  color: var(--blue);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.note-editor-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--foreground);
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.remove-note {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: #7d3838;
+  padding: 10px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
 .rename-row button,
 .edit-actions button {
   border: 1px solid var(--blue);

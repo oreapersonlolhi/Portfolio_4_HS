@@ -89,14 +89,10 @@
         if (!saved) return project.notes;
         try {
           const notes = JSON.parse(saved);
-          return Array.isArray(notes) && notes.length ? notes : project.notes;
+          return Array.isArray(notes) ? notes : project.notes;
         } catch {
           return project.notes;
         }
-      }
-
-      function notesText() {
-        return projectNotes().join("\n");
       }
 
       function escapeHTML(value) {
@@ -147,7 +143,6 @@
         const notes = projectNotes();
         const safeTitle = escapeHTML(title);
         const safeSummary = escapeHTML(summary);
-        const safeNotesText = escapeHTML(notesText());
         if (!visible.includes(currentImage)) {
           currentImage = visible[0];
         }
@@ -194,11 +189,20 @@
               </div>
             </form>
             <form class="edit-form editor-only" id="notes-form">
-              <label for="project-notes-input">Process notes</label>
-              <textarea id="project-notes-input" rows="7">${safeNotesText}</textarea>
+              <label>Process notes</label>
+              <div class="note-editor-list" id="note-editor-list">
+                ${notes.map((note, index) => `
+                  <div class="note-editor-row">
+                    <span class="note-bullet" aria-hidden="true">&bull;</span>
+                    <input class="note-editor-input" type="text" value="${escapeHTML(note)}" aria-label="Bullet point ${index + 1}">
+                    <button class="remove-note" type="button" aria-label="Delete bullet point ${index + 1}">Delete</button>
+                  </div>
+                `).join("")}
+              </div>
               <div class="edit-actions">
-                <button class="primary" type="submit">Save notes</button>
-                <button type="button" id="reset-notes">Reset notes</button>
+                <button type="button" id="add-note">Add bullet point</button>
+                <button class="primary" type="submit">Save bullet points</button>
+                <button type="button" id="reset-notes">Reset bullet points</button>
               </div>
             </form>
             <form class="edit-form editor-only" id="add-image-form">
@@ -209,7 +213,7 @@
               </div>
             </form>
             <div class="notes-label">Process notes</div>
-            <ul>${notes.map((note) => `<li>${escapeHTML(note)}</li>`).join("")}</ul>
+            <ul class="project-notes-list">${notes.map((note) => `<li>${escapeHTML(note)}</li>`).join("")}</ul>
             <div class="display-actions editor-only">
               <button class="primary" type="button" id="set-display">Set as display image</button>
               <button type="button" id="set-home-image">Set as homepage image</button>
@@ -298,8 +302,9 @@
 
         document.getElementById("notes-form").addEventListener("submit", (event) => {
           event.preventDefault();
-          const notesInput = document.getElementById("project-notes-input");
-          const nextNotes = notesInput.value.split("\n").map((note) => note.trim()).filter(Boolean);
+          const nextNotes = [...document.querySelectorAll(".note-editor-input")]
+            .map((input) => input.value.trim())
+            .filter(Boolean);
           if (JSON.stringify(nextNotes) === JSON.stringify(project.notes)) {
             localStorage.removeItem(notesKey);
           } else {
@@ -307,6 +312,25 @@
           }
           render();
           document.getElementById("status").textContent = "Project notes saved in this browser.";
+        });
+
+        const noteEditorList = document.getElementById("note-editor-list");
+        document.getElementById("add-note").addEventListener("click", () => {
+          const row = document.createElement("div");
+          const nextNumber = noteEditorList.querySelectorAll(".note-editor-row").length + 1;
+          row.className = "note-editor-row";
+          row.innerHTML = `
+            <span class="note-bullet" aria-hidden="true">&bull;</span>
+            <input class="note-editor-input" type="text" aria-label="Bullet point ${nextNumber}" placeholder="Type a new bullet point">
+            <button class="remove-note" type="button" aria-label="Delete bullet point ${nextNumber}">Delete</button>
+          `;
+          noteEditorList.appendChild(row);
+          row.querySelector("input").focus();
+        });
+
+        noteEditorList.addEventListener("click", (event) => {
+          const removeButton = event.target.closest(".remove-note");
+          if (removeButton) removeButton.closest(".note-editor-row").remove();
         });
 
         document.getElementById("reset-description").addEventListener("click", () => {

@@ -1,6 +1,6 @@
 (() => {
   const selector = "h1, h2, h3, p, li, .project-kicker span, .section-label, .eyebrow, .notes-label";
-  const excluded = ".editor-only, .corner-tools, form, button, .status, .open-link, .hero h1, .project-description";
+  const excluded = ".editor-only, .corner-tools, form, button, .status, .open-link, .hero h1, .project-description, .project-notes-list";
   let applying = false;
 
   function editableElements() {

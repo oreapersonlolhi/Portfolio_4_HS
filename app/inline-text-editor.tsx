@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function InlineTextEditor() {
   useEffect(() => {
     const selector = "h1, h2, h3, p, li, .project-kicker span, .section-label, .eyebrow, .notes-label";
-    const excluded = ".homepage-editor, .inline-title-editor, .custom-item-editor, .corner-tools, form, button, .open-link, .hero h1";
+    const excluded = ".homepage-editor, .inline-title-editor, .custom-item-editor, .corner-tools, form, button, .open-link, .hero h1, .project-notes-list";
 
     function apply() {
       const enabled = localStorage.getItem("portfolio-editor-mode") === "true";
