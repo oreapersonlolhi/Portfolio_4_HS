@@ -174,7 +174,10 @@
           <div class="detail-copy">
             <p class="eyebrow">${project.categoryLabel} / ${project.year}</p>
             <h1>${safeTitle}</h1>
-            <p>${safeSummary}</p>
+            <section class="project-description-block" aria-labelledby="project-description-label">
+              <div class="notes-label" id="project-description-label">Description</div>
+              <p class="project-description">${safeSummary}</p>
+            </section>
             <form class="edit-form editor-only" id="rename-form">
               <label for="project-title-input">Project title</label>
               <div class="rename-row">
@@ -182,14 +185,20 @@
                 <button type="submit">Rename</button>
               </div>
             </form>
-            <form class="edit-form editor-only" id="text-form">
+            <form class="edit-form editor-only" id="description-form">
               <label for="project-summary-input">Project summary</label>
               <textarea id="project-summary-input" rows="4">${safeSummary}</textarea>
+              <div class="edit-actions">
+                <button class="primary" type="submit">Save description</button>
+                <button type="button" id="reset-description">Reset description</button>
+              </div>
+            </form>
+            <form class="edit-form editor-only" id="notes-form">
               <label for="project-notes-input">Process notes</label>
               <textarea id="project-notes-input" rows="7">${safeNotesText}</textarea>
               <div class="edit-actions">
-                <button class="primary" type="submit">Save text</button>
-                <button type="button" id="reset-text">Reset text</button>
+                <button class="primary" type="submit">Save notes</button>
+                <button type="button" id="reset-notes">Reset notes</button>
               </div>
             </form>
             <form class="edit-form editor-only" id="add-image-form">
@@ -268,22 +277,13 @@
           document.getElementById("status").textContent = "Photo added to this project in this browser.";
         });
 
-        document.getElementById("text-form").addEventListener("submit", (event) => {
+        document.getElementById("description-form").addEventListener("submit", (event) => {
           event.preventDefault();
           const summaryInput = document.getElementById("project-summary-input");
-          const notesInput = document.getElementById("project-notes-input");
           const nextSummary = summaryInput.value.trim();
-          const nextNotes = notesInput.value
-            .split("\n")
-            .map((note) => note.trim())
-            .filter(Boolean);
 
           if (!nextSummary) {
             document.getElementById("status").textContent = "Project summary cannot be blank.";
-            return;
-          }
-          if (!nextNotes.length) {
-            document.getElementById("status").textContent = "Add at least one process note.";
             return;
           }
 
@@ -292,20 +292,33 @@
           } else {
             localStorage.setItem(summaryKey, nextSummary);
           }
+          render();
+          document.getElementById("status").textContent = "Project description saved in this browser.";
+        });
+
+        document.getElementById("notes-form").addEventListener("submit", (event) => {
+          event.preventDefault();
+          const notesInput = document.getElementById("project-notes-input");
+          const nextNotes = notesInput.value.split("\n").map((note) => note.trim()).filter(Boolean);
           if (JSON.stringify(nextNotes) === JSON.stringify(project.notes)) {
             localStorage.removeItem(notesKey);
           } else {
             localStorage.setItem(notesKey, JSON.stringify(nextNotes));
           }
           render();
-          document.getElementById("status").textContent = "Project text updated across this browser.";
+          document.getElementById("status").textContent = "Project notes saved in this browser.";
         });
 
-        document.getElementById("reset-text").addEventListener("click", () => {
+        document.getElementById("reset-description").addEventListener("click", () => {
           localStorage.removeItem(summaryKey);
+          render();
+          document.getElementById("status").textContent = "Project description reset to the original draft.";
+        });
+
+        document.getElementById("reset-notes").addEventListener("click", () => {
           localStorage.removeItem(notesKey);
           render();
-          document.getElementById("status").textContent = "Project text reset to the original draft.";
+          document.getElementById("status").textContent = "Project notes reset to the original draft.";
         });
 
         document.getElementById("set-display").addEventListener("click", () => {

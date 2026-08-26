@@ -345,6 +345,20 @@ img {
   font-size: clamp(2.6rem, 5.5vw, 4.7rem);
 }
 
+.project-description-block {
+  margin-top: 28px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-description {
+  margin: 10px 0 0;
+  color: var(--foreground) !important;
+  font-size: 1.04rem !important;
+  line-height: 1.75 !important;
+}
+
 ul {
   margin: 12px 0 0;
   padding-left: 18px;
