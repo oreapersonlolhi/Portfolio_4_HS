@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 type Cover = { slug: string; label: string; href: string; images: string[] };
 
@@ -10,6 +10,22 @@ const defaults: Cover[] = [
   { slug: "music", label: "Music", href: "/category.html?category=music", images: ["/portfolio/bloom-nest.jpg"] },
   { slug: "sports", label: "Sports", href: "/category.html?category=sports", images: ["/portfolio/bridge.jpg"] },
 ];
+
+const projectImages = [
+  ["Micro Shelter", "/portfolio/micro-shelter.jpg"],
+  ["River House", "/portfolio/river-house.png"],
+  ["Villa Savoye", "/portfolio/villa-savoye.jpg"],
+  ["Fallingwater", "/portfolio/fallingwater.jpg"],
+  ["Forgotten Peak", "/portfolio/forgotten-peak.jpg"],
+  ["Contemporary Museum", "/portfolio/contemporary-museum.jpg"],
+  ["Highrise Building", "/portfolio/highrise-building.jpg"],
+  ["Motel / Hotel", "/portfolio/motel-hotel.jpg"],
+  ["Cradle-Cafe", "/portfolio/cradle-cafe.jpg"],
+  ["Church", "/portfolio/church.jpg"],
+  ["Dorm", "/portfolio/dorm.jpg"],
+  ["Freehand Sketches", "/portfolio/freehand-sketch.jpg"],
+  ["Circuit Studies", "/portfolio/circuits.jpg"],
+] as const;
 
 function appImagePath(image: string) {
   return image.startsWith("public/") ? `/${image.slice("public/".length)}` : image;
@@ -32,8 +48,7 @@ export default function CategoryCovers() {
     return () => window.removeEventListener("portfolio-editor-change", sync);
   }, []);
 
-  function saveImages(slug: string, raw: string) {
-    const images = raw.split("\n").map((value) => value.trim()).filter(Boolean);
+  function saveImages(slug: string, images: string[]) {
     if (!images.length) return;
     localStorage.setItem(`category-cover:${slug}`, JSON.stringify(images));
     setCovers((current) => current.map((cover) => cover.slug === slug ? { ...cover, images } : cover));
@@ -43,16 +58,18 @@ export default function CategoryCovers() {
     {covers.map((cover) => <article className="category-cover-card" key={cover.slug}>
       <a className="category-cover" href={cover.href}>
         <span className="category-image-strip">
-          {cover.images.map((image, index) => <img key={`${image}-${index}`} src={appImagePath(image)} alt={`${cover.label} project ${index + 1}`} />)}
+          {cover.images.map((image, index) => <img key={`${image}-${index}`} src={appImagePath(image)} alt={`${cover.label} project ${index + 1}`} style={{ "--fade-index": index, "--fade-count": cover.images.length } as CSSProperties} />)}
         </span>
         <span className="category-cover-label">{cover.label}</span>
       </a>
       {editing && <form className="cover-editor" onSubmit={(event) => {
         event.preventDefault();
-        saveImages(cover.slug, new FormData(event.currentTarget).get("images")?.toString() || "");
+        saveImages(cover.slug, new FormData(event.currentTarget).getAll("images").map(String));
       }}>
-        <label htmlFor={`cover-${cover.slug}`}>Display pictures—one path per line</label>
-        <textarea id={`cover-${cover.slug}`} name="images" rows={4} defaultValue={cover.images.join("\n")} />
+        <label htmlFor={`cover-${cover.slug}`}>Choose one or more project pictures</label>
+        <select id={`cover-${cover.slug}`} name="images" multiple size={7} defaultValue={cover.images.map(appImagePath)}>
+          {projectImages.map(([title, image]) => <option value={image} key={image}>{title}</option>)}
+        </select>
         <button type="submit">Save pictures</button>
       </form>}
     </article>)}

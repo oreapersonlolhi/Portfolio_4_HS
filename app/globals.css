@@ -280,6 +280,7 @@ li + li {
   grid-template-columns: minmax(180px, 0.5fr) minmax(240px, 0.7fr) minmax(280px, 1fr);
   gap: 32px;
   align-items: start;
+  text-align: right;
 }
 
 .home-about h2,
@@ -300,6 +301,7 @@ li + li {
 
 .home-section-heading {
   margin-bottom: 30px;
+  text-align: right;
 }
 
 .home-section-heading .section-label {
@@ -310,6 +312,8 @@ li + li {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+  width: min(860px, 100%);
+  margin-left: auto;
 }
 
 .category-cover {
@@ -360,7 +364,17 @@ li + li {
 
 .category-cover:hover img,
 .category-cover:focus-visible img {
+  position: absolute !important;
+  inset: 0;
+  opacity: 0;
   transform: scale(1.035);
+  animation: categoryCoverFade calc(var(--fade-count) * 2.8s) ease-in-out infinite;
+  animation-delay: calc(var(--fade-index) * 2.8s);
+}
+
+@keyframes categoryCoverFade {
+  0%, 48% { opacity: 1; }
+  64%, 100% { opacity: 0; }
 }
 
 .category-cover-label {
@@ -387,13 +401,16 @@ li + li {
   font-weight: 700;
 }
 
-.cover-editor textarea {
+.cover-editor textarea,
+.cover-editor select {
   width: 100%;
   padding: 9px;
   border: 1px solid var(--line);
   background: white;
   font: inherit;
 }
+
+.cover-editor select { min-height: 150px; }
 
 .cover-editor button {
   justify-self: start;
