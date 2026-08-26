@@ -139,25 +139,83 @@
       }
 
       const projects = window.PORTFOLIO_PROJECTS.filter((project) => project.category === category);
+      const orderKey = `project-order:${category}`;
       const grid = document.getElementById("project-grid");
 
-      grid.innerHTML = projects.map((project) => {
-        const title = escapeHTML(projectTitle(project));
-        const summary = escapeHTML(projectSummary(project));
-        return `
-        <a class="project-card" href="project.html?project=${project.id}">
-          <div class="project-image-wrap">
-            <img src="${displayImage(project)}" alt="${title}">
-          </div>
-          <div class="project-copy">
-            <div class="project-kicker"><span>${project.categoryLabel}</span><span>${project.year}</span></div>
-            <h2>${title}</h2>
-            <p>${summary}</p>
-            <span class="open-link">Open project</span>
-          </div>
-        </a>
-      `;
-      }).join("");
+      function orderedProjects() {
+        let savedOrder = [];
+        try {
+          const saved = JSON.parse(localStorage.getItem(orderKey) || "[]");
+          if (Array.isArray(saved)) savedOrder = saved;
+        } catch {}
+
+        const byId = new Map(projects.map((project) => [project.id, project]));
+        const ordered = savedOrder.map((id) => byId.get(id)).filter(Boolean);
+        const included = new Set(ordered.map((project) => project.id));
+        return [...ordered, ...projects.filter((project) => !included.has(project.id))];
+      }
+
+      function saveProjectOrder(ordered) {
+        const nextIds = ordered.map((project) => project.id);
+        const defaultIds = projects.map((project) => project.id);
+        if (JSON.stringify(nextIds) === JSON.stringify(defaultIds)) {
+          localStorage.removeItem(orderKey);
+        } else {
+          localStorage.setItem(orderKey, JSON.stringify(nextIds));
+        }
+      }
+
+      function moveProject(projectId, direction) {
+        const ordered = orderedProjects();
+        const currentIndex = ordered.findIndex((project) => project.id === projectId);
+        if (currentIndex < 0) return;
+        const targetIndex = direction === "top"
+          ? 0
+          : direction === "up"
+            ? Math.max(0, currentIndex - 1)
+            : Math.min(ordered.length - 1, currentIndex + 1);
+        if (targetIndex === currentIndex) return;
+        const [moved] = ordered.splice(currentIndex, 1);
+        ordered.splice(targetIndex, 0, moved);
+        saveProjectOrder(ordered);
+        renderProjects();
+      }
+
+      function renderProjects() {
+        const ordered = orderedProjects();
+        grid.innerHTML = ordered.map((project, index) => {
+          const title = escapeHTML(projectTitle(project));
+          const summary = escapeHTML(projectSummary(project));
+          return `
+            <article class="project-card-shell">
+              <a class="project-card" href="project.html?project=${project.id}">
+                <div class="project-image-wrap">
+                  <img src="${displayImage(project)}" alt="${title}">
+                </div>
+                <div class="project-copy">
+                  <div class="project-kicker"><span>${project.categoryLabel}</span><span>${project.year}</span></div>
+                  <h2>${title}</h2>
+                  <p>${summary}</p>
+                  <span class="open-link">Open project</span>
+                </div>
+              </a>
+              <div class="project-order-controls editor-only" aria-label="Reorder ${title}">
+                <span class="project-rank">Position ${index + 1}</span>
+                <button type="button" data-project-id="${project.id}" data-direction="top" ${index === 0 ? "disabled" : ""}>Move to top</button>
+                <button type="button" data-project-id="${project.id}" data-direction="up" ${index === 0 ? "disabled" : ""}>Move up</button>
+                <button type="button" data-project-id="${project.id}" data-direction="down" ${index === ordered.length - 1 ? "disabled" : ""}>Move down</button>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        grid.querySelectorAll(".project-order-controls button").forEach((button) => {
+          button.addEventListener("click", () => moveProject(button.dataset.projectId, button.dataset.direction));
+        });
+        syncEditorMode();
+      }
+
+      renderProjects();
 
       const editorToggle = document.getElementById("editor-mode-toggle");
       if (editorToggle) {
