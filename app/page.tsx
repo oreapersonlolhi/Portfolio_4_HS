@@ -277,6 +277,7 @@ export default function Home() {
         </div>
       </header>
 
+      <div className="home-overview">
       <section className="home-about" aria-labelledby="about-me-title">
         <p className="section-label">01 / Introduction</p>
         <h2 id="about-me-title">About Me</h2>
@@ -290,6 +291,7 @@ export default function Home() {
         </div>
         <CategoryCovers />
       </section>
+      </div>
 
       <HomepageEditor />
 

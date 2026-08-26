@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Cover = { slug: string; label: string; href: string; images: string[] };
 
@@ -34,6 +34,8 @@ function appImagePath(image: string) {
 export default function CategoryCovers() {
   const [covers, setCovers] = useState(defaults);
   const [editing, setEditing] = useState(false);
+  const [activeImages, setActiveImages] = useState<Record<string, number>>({});
+  const timers = useRef<Record<string, ReturnType<typeof setInterval>>>({});
 
   useEffect(() => {
     setEditing(localStorage.getItem("portfolio-editor-mode") === "true");
@@ -48,6 +50,20 @@ export default function CategoryCovers() {
     return () => window.removeEventListener("portfolio-editor-change", sync);
   }, []);
 
+  function startFade(cover: Cover) {
+    if (cover.images.length < 2) return;
+    setActiveImages((current) => ({ ...current, [cover.slug]: 0 }));
+    timers.current[cover.slug] = setInterval(() => {
+      setActiveImages((current) => ({ ...current, [cover.slug]: ((current[cover.slug] ?? 0) + 1) % cover.images.length }));
+    }, 1000);
+  }
+
+  function stopFade(slug: string) {
+    clearInterval(timers.current[slug]);
+    delete timers.current[slug];
+    setActiveImages((current) => { const next = { ...current }; delete next[slug]; return next; });
+  }
+
   function saveImages(slug: string, images: string[]) {
     if (!images.length) return;
     localStorage.setItem(`category-cover:${slug}`, JSON.stringify(images));
@@ -56,9 +72,9 @@ export default function CategoryCovers() {
 
   return <div className="category-cover-grid">
     {covers.map((cover) => <article className="category-cover-card" key={cover.slug}>
-      <a className="category-cover" href={cover.href}>
+      <a className={`category-cover ${activeImages[cover.slug] !== undefined ? "is-hovering" : ""}`} href={cover.href} onMouseEnter={() => startFade(cover)} onMouseLeave={() => stopFade(cover.slug)}>
         <span className="category-image-strip">
-          {cover.images.map((image, index) => <img key={`${image}-${index}`} src={appImagePath(image)} alt={`${cover.label} project ${index + 1}`} style={{ "--fade-index": index, "--fade-count": cover.images.length } as CSSProperties} />)}
+          {cover.images.map((image, index) => <img className={activeImages[cover.slug] === index ? "is-active" : ""} key={`${image}-${index}`} src={appImagePath(image)} alt={`${cover.label} project ${index + 1}`} />)}
         </span>
         <span className="category-cover-label">{cover.label}</span>
       </a>

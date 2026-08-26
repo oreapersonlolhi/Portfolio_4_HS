@@ -316,20 +316,21 @@
       .inline-editable:focus { outline: 2px solid var(--blue); background: rgba(255,255,255,.75); }
 
       .legacy-home-content { display: none !important; }
-      .home-about, .home-categories { padding: 64px 0; border-bottom: 1px solid var(--line); }
-      .home-about { display: grid; grid-template-columns: minmax(180px,.5fr) minmax(240px,.7fr) minmax(280px,1fr); gap: 32px; align-items: start; text-align:right; }
+      .home-overview { display:grid; grid-template-columns:minmax(260px,.8fr) minmax(420px,1.2fr); gap:56px; border-bottom:1px solid var(--line); }
+      .home-about, .home-categories { padding:64px 0; }
+      .home-about { display:block; text-align:right; }
       .home-about h2, .home-section-heading h2 { margin: 0; font-family: Georgia,"Times New Roman",serif; font-size: clamp(2.4rem,5vw,4rem); font-weight: 400; line-height: 1; }
-      .home-about > p:last-child { margin: 0; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
+      .home-about > p:last-child { margin:28px 0 0; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
       .home-section-heading { margin-bottom: 30px; text-align:right; }
       .home-section-heading .section-label { margin-bottom: 12px; }
-      .category-cover-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; width:min(860px,100%); margin-left:auto; }
+      .category-cover-grid { display:grid; grid-template-columns:1fr; gap:20px; width:min(860px,100%); margin-left:auto; }
       .category-cover-card { min-width:0; }
       .category-cover { position: relative; display:block; min-height: 360px; overflow: hidden; background: #dcd8ce; color: white; text-decoration: none; }
       .category-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 42%,rgba(10,16,20,.72)); pointer-events:none; }
       .category-image-strip { position:absolute; inset:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:thin; }
       .category-image-strip img { flex:0 0 100%; width:100%; height:100%; object-fit:cover; scroll-snap-align:start; transition:transform 300ms ease; }
-      .category-cover:hover img, .category-cover:focus-visible img { position:absolute; inset:0; opacity:0; transform:scale(1.035); animation:categoryCoverFade calc(var(--fade-count) * 2.8s) ease-in-out infinite; animation-delay:calc(var(--fade-index) * 2.8s); }
-      @keyframes categoryCoverFade { 0%,48%{opacity:1} 64%,100%{opacity:0} }
+      .category-cover.is-hovering img { position:absolute; inset:0; opacity:0; transform:scale(1.035); transition:opacity 650ms ease; }
+      .category-cover.is-hovering img.is-active { opacity:1; }
       .category-cover-label { position:absolute; right:24px; bottom:22px; left:24px; z-index:1; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.65rem,3vw,2.4rem); }
       .cover-editor { display:grid; gap:8px; margin-top:10px; padding:14px; border:1px dashed var(--blue); background:#f4f8fa; }
       .cover-editor label { font-size:.82rem; font-weight:700; }
@@ -628,7 +629,7 @@
           grid-template-columns: 1fr;
         }
         .custom-editor-forms { grid-template-columns: 1fr; }
-        .home-about, .category-cover-grid { grid-template-columns: 1fr; }
+        .home-overview, .category-cover-grid { grid-template-columns:1fr; }
       }
     </style>
   </head>
@@ -668,6 +669,7 @@
         </div>
       </header>
 
+      <div class="home-overview">
       <section class="home-about" aria-labelledby="about-me-title">
         <p class="section-label">01 / Introduction</p>
         <h2 id="about-me-title">About Me</h2>
@@ -686,6 +688,7 @@
           <article class="category-cover-card" data-category="sports" data-label="Sports" data-default-images="public/portfolio/bridge.jpg"><a class="category-cover" href="category.html?category=sports"><span class="category-image-strip"></span><span class="category-cover-label">Sports</span></a></article>
         </div>
       </section>
+      </div>
 
       <section class="category-intro legacy-home-content" id="architecture">
         <p class="section-label">Architecture + Physical Work</p>

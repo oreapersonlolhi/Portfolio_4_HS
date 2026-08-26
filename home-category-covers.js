@@ -1,5 +1,6 @@
 (() => {
   const cards = [...document.querySelectorAll(".category-cover-card")];
+  const timers = new WeakMap();
 
   function storedImages(card) {
     try {
@@ -14,8 +15,26 @@
       const images = storedImages(card);
       card.querySelector(".category-image-strip").innerHTML = images.map((image, index) => {
         const source = image.startsWith("/portfolio/") ? `public${image}` : image;
-        return `<img src="${source}" alt="${card.dataset.label} project ${index + 1}" style="--fade-index:${index};--fade-count:${images.length}">`;
+        return `<img src="${source}" alt="${card.dataset.label} project ${index + 1}">`;
       }).join("");
+      const link = card.querySelector(".category-cover");
+      link.onmouseenter = () => {
+        const pictures = [...link.querySelectorAll("img")];
+        if (pictures.length < 2) return;
+        let active = 0;
+        link.classList.add("is-hovering");
+        pictures[0].classList.add("is-active");
+        timers.set(link, setInterval(() => {
+          pictures[active].classList.remove("is-active");
+          active = (active + 1) % pictures.length;
+          pictures[active].classList.add("is-active");
+        }, 1000));
+      };
+      link.onmouseleave = () => {
+        clearInterval(timers.get(link));
+        link.classList.remove("is-hovering");
+        link.querySelectorAll("img").forEach((image) => image.classList.remove("is-active"));
+      };
       card.querySelector(".cover-editor")?.remove();
       if (!editing) return;
       const form = document.createElement("form");
