@@ -276,20 +276,36 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="category-intro" id="architecture">
-        <p className="section-label">Architecture + Physical Work</p>
-        <h2>Selected models, spatial studies, and physical builds</h2>
+      <section className="home-about" aria-labelledby="about-me-title">
+        <p className="section-label">01 / Introduction</p>
+        <h2 id="about-me-title">About Me</h2>
+        <p>Write a short introduction about yourself here.</p>
       </section>
 
-      <section className="project-grid" aria-label="Selected portfolio projects">
-        {frontPageProjects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
-        ))}
+      <section className="home-categories" aria-labelledby="work-title">
+        <div className="home-section-heading">
+          <p className="section-label">02 / Projects</p>
+          <h2 id="work-title">Explore My Work</h2>
+        </div>
+        <div className="category-cover-grid">
+          <a className="category-cover" href="/category.html?category=architecture">
+            <Image src="/portfolio/river-house.png" alt="Architecture project" fill sizes="(max-width: 760px) 100vw, 50vw" />
+            <span>Architecture</span>
+          </a>
+          <a className="category-cover" href="/category.html?category=electronic-engineering">
+            <Image src="/portfolio/circuits.jpg" alt="Electronic engineering project" fill sizes="(max-width: 760px) 100vw, 50vw" />
+            <span>Electronic Engineering</span>
+          </a>
+          <a className="category-cover" href="/category.html?category=music">
+            <Image src="/portfolio/bloom-nest.jpg" alt="Temporary cover for music projects" fill sizes="(max-width: 760px) 100vw, 50vw" />
+            <span>Music</span>
+          </a>
+          <a className="category-cover" href="/category.html?category=sports">
+            <Image src="/portfolio/bridge.jpg" alt="Temporary cover for sports projects" fill sizes="(max-width: 760px) 100vw, 50vw" />
+            <span>Sports</span>
+          </a>
+        </div>
       </section>
-
-      <div className="category-link-row">
-        <a href="/category.html?category=architecture">See all architecture projects</a>
-      </div>
 
       <HomepageEditor />
 

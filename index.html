@@ -315,6 +315,20 @@
       .inline-editable { outline: 1px dashed rgba(36, 87, 122, .55); outline-offset: 4px; cursor: text; }
       .inline-editable:focus { outline: 2px solid var(--blue); background: rgba(255,255,255,.75); }
 
+      .legacy-home-content { display: none !important; }
+      .home-about, .home-categories { padding: 64px 0; border-bottom: 1px solid var(--line); }
+      .home-about { display: grid; grid-template-columns: minmax(180px,.5fr) minmax(240px,.7fr) minmax(280px,1fr); gap: 32px; align-items: start; }
+      .home-about h2, .home-section-heading h2 { margin: 0; font-family: Georgia,"Times New Roman",serif; font-size: clamp(2.4rem,5vw,4rem); font-weight: 400; line-height: 1; }
+      .home-about > p:last-child { margin: 0; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
+      .home-section-heading { margin-bottom: 30px; }
+      .home-section-heading .section-label { margin-bottom: 12px; }
+      .category-cover-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+      .category-cover { position: relative; min-height: 360px; overflow: hidden; background: #dcd8ce; color: white; text-decoration: none; }
+      .category-cover::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 42%,rgba(10,16,20,.72)); }
+      .category-cover img { width:100%; height:100%; object-fit:cover; transition:transform 300ms ease; }
+      .category-cover:hover img, .category-cover:focus-visible img { transform:scale(1.035); }
+      .category-cover span { position:absolute; right:24px; bottom:22px; left:24px; z-index:1; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.65rem,3vw,2.4rem); }
+
       .featured-section {
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.9fr);
@@ -606,6 +620,7 @@
           grid-template-columns: 1fr;
         }
         .custom-editor-forms { grid-template-columns: 1fr; }
+        .home-about, .category-cover-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -645,14 +660,33 @@
         </div>
       </header>
 
-      <section class="category-intro" id="architecture">
+      <section class="home-about" aria-labelledby="about-me-title">
+        <p class="section-label">01 / Introduction</p>
+        <h2 id="about-me-title">About Me</h2>
+        <p>Write a short introduction about yourself here.</p>
+      </section>
+
+      <section class="home-categories" aria-labelledby="work-title">
+        <div class="home-section-heading">
+          <p class="section-label">02 / Projects</p>
+          <h2 id="work-title">Explore My Work</h2>
+        </div>
+        <div class="category-cover-grid">
+          <a class="category-cover" href="category.html?category=architecture"><img src="public/portfolio/river-house.png" alt="Architecture project"><span>Architecture</span></a>
+          <a class="category-cover" href="category.html?category=electronic-engineering"><img src="public/portfolio/circuits.jpg" alt="Electronic engineering project"><span>Electronic Engineering</span></a>
+          <a class="category-cover" href="category.html?category=music"><img src="public/portfolio/bloom-nest.jpg" alt="Temporary cover for music projects"><span>Music</span></a>
+          <a class="category-cover" href="category.html?category=sports"><img src="public/portfolio/bridge.jpg" alt="Temporary cover for sports projects"><span>Sports</span></a>
+        </div>
+      </section>
+
+      <section class="category-intro legacy-home-content" id="architecture">
         <p class="section-label">Architecture + Physical Work</p>
         <h2>Selected models, spatial studies, and physical builds</h2>
       </section>
 
       <section class="home-editor editor-only" id="home-editor" aria-label="Homepage showcase editor"></section>
 
-      <section class="project-grid" id="home-project-grid" aria-label="Selected portfolio projects">
+      <section class="project-grid legacy-home-content" id="home-project-grid" aria-label="Selected portfolio projects">
         <a class="project-card" href="project.html?project=river-house">
           <div class="project-image-wrap"><img src="public/portfolio/river-house.png" alt="River House architectural study." /></div>
           <div class="project-copy">
@@ -787,7 +821,7 @@
         </a>
       </section>
 
-      <div class="category-link-row">
+      <div class="category-link-row legacy-home-content">
         <a href="category.html?category=architecture">See all architecture projects</a>
       </div>
 
@@ -802,7 +836,7 @@
       </section>
       <section class="custom-home-grid" id="custom-home-grid" aria-label="Custom homepage content"></section>
 
-      <section class="timeline-section">
+      <section class="timeline-section legacy-home-content">
         <p class="section-label">Caption Drafting Note</p>
         <h2>Roomy process notes are built in for every project.</h2>
         <p>
