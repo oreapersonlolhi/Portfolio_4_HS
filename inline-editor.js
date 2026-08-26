@@ -17,8 +17,11 @@
     const enabled = localStorage.getItem("portfolio-editor-mode") === "true";
     editableElements().forEach((element, index) => {
       const key = keyFor(element, index);
-      const saved = localStorage.getItem(key);
-      if (saved !== null && element.textContent !== saved) element.textContent = saved;
+      if (!element.dataset.inlineEditorRestored) {
+        const saved = localStorage.getItem(key);
+        if (saved !== null) element.textContent = saved;
+        element.dataset.inlineEditorRestored = "true";
+      }
       element.contentEditable = enabled ? "true" : "false";
       element.classList.toggle("inline-editable", enabled);
       if (!element.dataset.inlineEditorBound) {

@@ -12,8 +12,11 @@ export default function InlineTextEditor() {
       const elements = [...document.querySelectorAll<HTMLElement>(selector)].filter((element) => !element.closest(excluded));
       elements.forEach((element, index) => {
         const key = `inline-text:${location.pathname}:${element.id || element.dataset.editKey || index}`;
-        const saved = localStorage.getItem(key);
-        if (saved !== null && element.textContent !== saved) element.textContent = saved;
+        if (!element.dataset.inlineEditorRestored) {
+          const saved = localStorage.getItem(key);
+          if (saved !== null) element.textContent = saved;
+          element.dataset.inlineEditorRestored = "true";
+        }
         element.contentEditable = enabled ? "true" : "false";
         element.classList.toggle("inline-editable", enabled);
         if (element.dataset.inlineEditorBound) return;
