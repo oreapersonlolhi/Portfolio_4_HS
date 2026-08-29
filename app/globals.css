@@ -56,6 +56,7 @@ body:not(.editor-mode) .home-page {
 
 body:not(.editor-mode) .home-page .hero {
   padding-top: 0;
+  padding-right: min(58vw, 704px);
   padding-bottom: 18px;
 }
 
@@ -305,6 +306,8 @@ li + li {
 }
 
 body:not(.editor-mode) .home-page .home-overview {
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(56vw, 680px));
+  gap: 32px;
   min-height: 0;
   overflow: hidden;
 }
@@ -322,11 +325,19 @@ body:not(.editor-mode) .home-page .home-categories {
 }
 
 body:not(.editor-mode) .home-page .home-section-heading {
-  margin-bottom: 10px;
+  display: none;
 }
 
 body:not(.editor-mode) .home-page .category-cover-grid {
-  min-height: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  width: min(56vw, 680px);
+  height: 100dvh;
+  min-height: 100dvh;
+  margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -806,7 +817,7 @@ footer p {
   .category-cover-grid { grid-template-columns: 1fr; }
 
   body:not(.editor-mode) .home-page .home-overview {
-    grid-template-columns: minmax(170px, 0.65fr) minmax(320px, 1.35fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, min(56vw, 680px));
     gap: 28px;
   }
 }
@@ -859,13 +870,14 @@ footer p {
   }
 
   body:not(.editor-mode) .home-page .home-overview {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 0;
+    grid-template-columns: minmax(0, 42vw) minmax(0, 58vw);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 12px;
   }
 
   body:not(.editor-mode) .home-page .home-about {
     padding: 12px 0;
+    padding-right: 8px;
     text-align: left;
   }
 
@@ -893,6 +905,7 @@ footer p {
   }
 
   body:not(.editor-mode) .home-page .category-cover-grid {
+    width: 58vw;
     padding: 18px 32px;
   }
 
