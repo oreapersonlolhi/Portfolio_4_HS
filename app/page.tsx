@@ -245,7 +245,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Home() {
   return (
-    <main>
+    <main className="home-page">
       <InlineTextEditor />
       <header className="hero">
         <div className="corner-tools">
