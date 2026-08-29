@@ -65,7 +65,7 @@ body:not(.editor-mode) .home-page .hero h1 {
 }
 
 body:not(.editor-mode) .home-page .intro-row {
-  margin-top: 18px;
+  display: none;
 }
 
 .hero {
@@ -312,8 +312,8 @@ body:not(.editor-mode) .home-page .home-overview {
 body:not(.editor-mode) .home-page .home-about,
 body:not(.editor-mode) .home-page .home-categories {
   min-height: 0;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 body:not(.editor-mode) .home-page .home-categories {
@@ -322,7 +322,7 @@ body:not(.editor-mode) .home-page .home-categories {
 }
 
 body:not(.editor-mode) .home-page .home-section-heading {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 body:not(.editor-mode) .home-page .category-cover-grid {
@@ -335,8 +335,7 @@ body:not(.editor-mode) .home-page .category-cover-grid {
 }
 
 body:not(.editor-mode) .home-page footer {
-  padding-top: 12px;
-  padding-bottom: 0;
+  display: none;
 }
 
 .home-about,
