@@ -1,6 +1,31 @@
 (() => {
-  const cards = [...document.querySelectorAll(".category-cover-card")];
+  const grid = document.querySelector(".category-cover-grid");
+  let cards = [];
   const timers = new WeakMap();
+
+  function prepareCircularStrip(editing) {
+    grid.querySelectorAll("[data-loop-copy]").forEach((card) => card.remove());
+    const originals = [...grid.querySelectorAll(":scope > .category-cover-card")];
+    originals.forEach((card) => card.querySelector(".cover-editor")?.remove());
+    if (!editing) {
+      const before = document.createDocumentFragment();
+      const after = document.createDocumentFragment();
+      originals.forEach((card) => {
+        const copy = card.cloneNode(true);
+        copy.dataset.loopCopy = "before";
+        before.appendChild(copy);
+      });
+      originals.forEach((card) => {
+        const copy = card.cloneNode(true);
+        copy.dataset.loopCopy = "after";
+        after.appendChild(copy);
+      });
+      grid.prepend(before);
+      grid.append(after);
+      requestAnimationFrame(() => { grid.scrollTop = grid.scrollHeight / 3; });
+    }
+    cards = [...grid.querySelectorAll(":scope > .category-cover-card")];
+  }
 
   function storedImages(card) {
     try {
@@ -11,6 +36,7 @@
 
   function render() {
     const editing = localStorage.getItem("portfolio-editor-mode") === "true";
+    prepareCircularStrip(editing);
     cards.forEach((card) => {
       const images = storedImages(card);
       card.querySelector(".category-image-strip").innerHTML = images.map((image, index) => {
@@ -50,6 +76,14 @@
       card.appendChild(form);
     });
   }
+
+  grid.addEventListener("scroll", () => {
+    if (localStorage.getItem("portfolio-editor-mode") === "true") return;
+    const cycleHeight = grid.scrollHeight / 3;
+    if (!cycleHeight) return;
+    if (grid.scrollTop < cycleHeight * 0.5) grid.scrollTop += cycleHeight;
+    if (grid.scrollTop >= cycleHeight * 1.5) grid.scrollTop -= cycleHeight;
+  }, { passive: true });
 
   document.addEventListener("click", (event) => { if (event.target.closest(".editor-toggle")) setTimeout(render); });
   render();

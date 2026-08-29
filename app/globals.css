@@ -331,7 +331,7 @@ body:not(.editor-mode) .home-page .home-section-heading {
 body:not(.editor-mode) .home-page .category-cover-grid {
   position: fixed;
   top: 0;
-  right: 0;
+  right: clamp(14px, 2vw, 28px);
   bottom: 0;
   z-index: 5;
   width: min(56vw, 680px);
@@ -906,6 +906,7 @@ footer p {
 
   body:not(.editor-mode) .home-page .category-cover-grid {
     width: 58vw;
+    right: 10px;
     padding: 18px 32px;
   }
 

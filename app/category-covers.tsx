@@ -36,6 +36,7 @@ export default function CategoryCovers() {
   const [editing, setEditing] = useState(false);
   const [activeImages, setActiveImages] = useState<Record<string, number>>({});
   const timers = useRef<Record<string, ReturnType<typeof setInterval>>>({});
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEditing(localStorage.getItem("portfolio-editor-mode") === "true");
@@ -49,6 +50,27 @@ export default function CategoryCovers() {
     window.addEventListener("portfolio-editor-change", sync);
     return () => window.removeEventListener("portfolio-editor-change", sync);
   }, []);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid || editing) return;
+
+    const centerStrip = () => {
+      grid.scrollTop = grid.scrollHeight / 3;
+    };
+    const frame = requestAnimationFrame(centerStrip);
+    const keepCircular = () => {
+      const cycleHeight = grid.scrollHeight / 3;
+      if (!cycleHeight) return;
+      if (grid.scrollTop < cycleHeight * 0.5) grid.scrollTop += cycleHeight;
+      if (grid.scrollTop >= cycleHeight * 1.5) grid.scrollTop -= cycleHeight;
+    };
+    grid.addEventListener("scroll", keepCircular, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      grid.removeEventListener("scroll", keepCircular);
+    };
+  }, [editing, covers]);
 
   function startFade(cover: Cover) {
     if (cover.images.length < 2) return;
@@ -70,15 +92,19 @@ export default function CategoryCovers() {
     setCovers((current) => current.map((cover) => cover.slug === slug ? { ...cover, images } : cover));
   }
 
-  return <div className="category-cover-grid">
-    {covers.map((cover) => <article className="category-cover-card" key={cover.slug}>
+  const displayedCovers = editing
+    ? covers.map((cover) => ({ cover, cycle: 0 }))
+    : [0, 1, 2].flatMap((cycle) => covers.map((cover) => ({ cover, cycle })));
+
+  return <div className="category-cover-grid" ref={gridRef}>
+    {displayedCovers.map(({ cover, cycle }) => <article className="category-cover-card" key={`${cycle}-${cover.slug}`}>
       <a className={`category-cover ${activeImages[cover.slug] !== undefined ? "is-hovering" : ""}`} href={cover.href} onMouseEnter={() => startFade(cover)} onMouseLeave={() => stopFade(cover.slug)}>
         <span className="category-image-strip">
           {cover.images.map((image, index) => <img className={activeImages[cover.slug] === index ? "is-active" : ""} key={`${image}-${index}`} src={appImagePath(image)} alt={`${cover.label} project ${index + 1}`} />)}
         </span>
         <span className="category-cover-label">{cover.label}</span>
       </a>
-      {editing && <form className="cover-editor" onSubmit={(event) => {
+      {editing && cycle === 0 && <form className="cover-editor" onSubmit={(event) => {
         event.preventDefault();
         saveImages(cover.slug, new FormData(event.currentTarget).getAll("images").map(String));
       }}>
