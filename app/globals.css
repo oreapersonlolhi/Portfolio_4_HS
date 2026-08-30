@@ -1129,6 +1129,14 @@ body:has(.story-home) {
   text-underline-offset: 5px;
 }
 
+.film-scroll-hint {
+  color: var(--blue);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .life-film {
   display: flex;
   gap: 14px;
@@ -1141,6 +1149,8 @@ body:has(.story-home) {
   box-shadow: inset 0 14px #f8f1e5, inset 0 -14px #f8f1e5;
   scroll-snap-type: x mandatory;
   scrollbar-color: #8c8175 #201c19;
+  cursor: ew-resize;
+  overscroll-behavior-inline: contain;
 }
 
 .life-frame {

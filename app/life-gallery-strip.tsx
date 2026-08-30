@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState, WheelEvent } from "react";
 
 export type LifePhoto = { id: string; src: string; alt: string };
 
@@ -9,6 +9,12 @@ export const defaultLifePhotos: LifePhoto[] = [
   { id: "creative-02", src: "/portfolio/bridge.jpg", alt: "A structural study representing curiosity and exploration" },
   { id: "creative-03", src: "/portfolio/freehand-sketch.jpg", alt: "A sketch from Heidi's personal creative process" },
   { id: "creative-04", src: "/portfolio/circuits.jpg", alt: "An electronic experiment from Heidi's hands-on practice" },
+  { id: "creative-05", src: "/portfolio/bloom-nest-2.jpg", alt: "A second creative study from Heidi's making practice" },
+  { id: "creative-06", src: "/portfolio/bridge-2.jpg", alt: "A second structural study from Heidi's explorations" },
+  { id: "creative-07", src: "/portfolio/freehand-sketch-2.jpg", alt: "Another moment from Heidi's drawing process" },
+  { id: "creative-08", src: "/portfolio/circuits-2.jpg", alt: "Another hands-on electronics experiment" },
+  { id: "creative-09", src: "/portfolio/bloom-nest-3.png", alt: "A third creative study from Heidi's portfolio" },
+  { id: "creative-10", src: "/portfolio/bridge-3.jpg", alt: "A third structural study from Heidi's portfolio" },
 ];
 
 export const LIFE_PHOTOS_KEY = "portfolio-life-photos";
@@ -47,6 +53,7 @@ export default function LifeGalleryStrip() {
   const [photos, setPhotos] = useState<LifePhoto[]>(defaultLifePhotos);
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState("");
+  const filmRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setPhotos(readLifePhotos());
@@ -62,7 +69,7 @@ export default function LifeGalleryStrip() {
   }
 
   async function addPhotos(event: ChangeEvent<HTMLInputElement>) {
-    const files = [...(event.target.files || [])].slice(0, Math.max(0, 12 - photos.length));
+    const files = [...(event.target.files || [])].slice(0, Math.max(0, 10 - photos.length));
     if (!files.length) return;
     try {
       const added = await Promise.all(files.map(async (file, index) => ({ id: `life-${Date.now()}-${index}`, src: await resizePhoto(file), alt: file.name.replace(/\.[^.]+$/, "") })));
@@ -73,9 +80,13 @@ export default function LifeGalleryStrip() {
   }
 
   return <>
-    <div className="life-film" aria-label="Scrollable life photo strip">
-      {photos.map((photo, index) => <article className="life-frame" key={photo.id}>
-        <a href={`/photo-gallery?photo=${index + 1}`} aria-label={`Open ${photo.alt} in the photo gallery`}><img src={photo.src} alt={photo.alt} /></a>
+    <div className="life-film" ref={filmRef} aria-label="Scrollable strip of ten life photos" onWheel={(event: WheelEvent<HTMLDivElement>) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      event.preventDefault();
+      filmRef.current?.scrollBy({ left: event.deltaY, behavior: "auto" });
+    }}>
+      {photos.map((photo) => <article className="life-frame" key={photo.id}>
+        <img src={photo.src} alt={photo.alt} />
         {editing && <button type="button" onClick={() => {
           const next = photos.filter((item) => item.id !== photo.id);
           save(next.length ? next : defaultLifePhotos);

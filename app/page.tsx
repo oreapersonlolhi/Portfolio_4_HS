@@ -57,7 +57,7 @@ export default function Home() {
             <p className="story-number">04 / Life in Frames</p>
             <h2 id="life-title">A few moments beyond the work</h2>
           </div>
-          <a className="gallery-link" href="/photo-gallery">Open photo gallery</a>
+          <span className="film-scroll-hint">Scroll to browse ten frames</span>
         </div>
         <LifeGalleryStrip />
       </section>
