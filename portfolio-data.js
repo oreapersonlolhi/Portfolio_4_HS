@@ -165,7 +165,8 @@ window.PORTFOLIO_PROJECTS = [
       "public/portfolio/full/forgotten-peak/forgotten-peak-047.jpg",
       "public/portfolio/full/forgotten-peak/forgotten-peak-048.jpg",
       "public/portfolio/full/forgotten-peak/forgotten-peak-049.jpg",
-      "public/portfolio/full/forgotten-peak/forgotten-peak-050.jpg"
+      "public/portfolio/full/forgotten-peak/forgotten-peak-050.jpg",
+      "public/portfolio/full/forgotten-peak/forgotten-peak-051.png"
     ],
     "summary": "A school design concept considering learning spaces, circulation, and a memorable campus identity.",
     "notes": [
@@ -420,7 +421,9 @@ window.PORTFOLIO_PROJECTS = [
       "public/portfolio/full/dorm/dorm-022.jpg",
       "public/portfolio/full/dorm/dorm-023.jpg",
       "public/portfolio/full/dorm/dorm-024.jpg",
-      "public/portfolio/full/dorm/dorm-025.jpg"
+      "public/portfolio/full/dorm/dorm-025.jpg",
+      "public/portfolio/full/dorm/dorm-026.png",
+      "public/portfolio/full/dorm/dorm-027.png"
     ],
     "summary": "A student-housing concept exploring shared living, privacy, and daily routines.",
     "notes": [
@@ -630,7 +633,9 @@ window.PORTFOLIO_PROJECTS = [
       "public/portfolio/full/hide-away-cabin/hide-away-cabin-032.jpg",
       "public/portfolio/full/hide-away-cabin/hide-away-cabin-033.jpg",
       "public/portfolio/full/hide-away-cabin/hide-away-cabin-034.jpg",
-      "public/portfolio/full/hide-away-cabin/hide-away-cabin-035.jpg"
+      "public/portfolio/full/hide-away-cabin/hide-away-cabin-035.jpg",
+      "public/portfolio/full/hide-away-cabin/hide-away-cabin-036.png",
+      "public/portfolio/full/hide-away-cabin/hide-away-cabin-037.png"
     ],
     "summary": "A compact retreat concept studying privacy, shelter, and a quiet relationship to its surroundings.",
     "notes": [
