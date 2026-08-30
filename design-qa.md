@@ -7,6 +7,7 @@
 - Implementation captures:
   - `/Users/heidi/Documents/Personal Portofolio/homepage-top.png`
   - `/Users/heidi/Documents/Personal Portofolio/homepage-interests-final.png`
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-interest-slideshow.png`
   - `/Users/heidi/Documents/Personal Portofolio/homepage-filmstrip.png`
 - Verification viewport: 1280 × 720 px
 - State: homepage, editor mode off; editor-on state also checked separately
@@ -19,12 +20,15 @@ Focused comparisons confirmed:
 
 - Intro section reads as a single centered opening rather than the former left/right split.
 - Four interest links are equal-size circles, visually distinct, and route to their existing category pages.
+- Each circle restores the previously selected image list from the original `category-cover:<category>` browser storage entry. When more than one image was selected, the circle cross-fades through that exact list every second while hovered or keyboard-focused, then returns to the first image when the pointer leaves.
 - The second biography section continues below the project interests and uses personal, lifestyle-oriented English copy.
 - The final photo browser is framed as a horizontal film strip and opens a separate photo gallery.
 
 ## Interaction checks
 
 - Architecture category link opens the Architecture page.
+- Existing category image selections remain non-destructively stored and are loaded without changing or replacing their saved values.
+- Multi-image circles use a one-second timer and a 700 ms opacity transition while hovered.
 - Photo-strip link opens the separate photo gallery.
 - Wrench button toggles editor mode without leaving the page.
 - Editor mode reveals the local multi-image chooser and existing editable text controls.

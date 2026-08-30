@@ -1045,11 +1045,19 @@ body:has(.story-home) {
 }
 
 .interest-image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: saturate(0.78) contrast(0.96);
+  opacity: 0;
+  transition: opacity 700ms ease;
 }
+
+.interest-image img:first-of-type { opacity: 1; }
+.interest-image.is-cycling img:first-of-type { opacity: 0; }
+.interest-image.is-cycling img.is-active { opacity: 1; }
 
 .interest-index {
   position: absolute;

@@ -8,6 +8,9 @@
   ];
   const film = document.getElementById("life-film");
   const status = document.getElementById("life-photo-status");
+  const interestTimers = new WeakMap();
+  function imagePath(image){return image.startsWith("public/")?`/${image.slice("public/".length)}`:image}
+  function prepareInterestSlideshows(){document.querySelectorAll(".interest-orbit[data-category]").forEach(card=>{const frame=card.querySelector(".interest-image");const original=frame.querySelector("img");let images=[original.getAttribute("src")];try{const saved=JSON.parse(localStorage.getItem(`category-cover:${card.dataset.category}`)||"null");if(Array.isArray(saved)&&saved.length)images=saved.map(String)}catch{}frame.querySelectorAll("img").forEach(image=>image.remove());const badge=frame.querySelector(".interest-index");images.forEach((source,index)=>{const image=document.createElement("img");image.src=imagePath(source);image.alt=`${card.querySelector("strong").textContent} project ${index+1}`;frame.insertBefore(image,badge)});card.addEventListener("mouseenter",()=>{const pictures=[...frame.querySelectorAll("img")];if(pictures.length<2||interestTimers.has(card))return;let active=0;frame.classList.add("is-cycling");pictures[0].classList.add("is-active");interestTimers.set(card,setInterval(()=>{pictures[active].classList.remove("is-active");active=(active+1)%pictures.length;pictures[active].classList.add("is-active")},1000))});card.addEventListener("mouseleave",()=>{clearInterval(interestTimers.get(card));interestTimers.delete(card);frame.classList.remove("is-cycling");frame.querySelectorAll("img").forEach(image=>image.classList.remove("is-active"))})})}
   function editorMode(){return localStorage.getItem("portfolio-editor-mode") === "true"}
   function syncEditor(){const enabled=editorMode();document.body.classList.toggle("editor-mode",enabled);document.querySelectorAll(".editor-toggle").forEach(button=>{button.setAttribute("aria-pressed",String(enabled));button.setAttribute("aria-label",enabled?"Turn off portfolio editor":"Turn on portfolio editor");button.title=enabled?"Turn editor off":"Turn editor on"});render()}
   function photos(){try{const saved=JSON.parse(localStorage.getItem(key)||"null");return Array.isArray(saved)&&saved.length?saved:defaults}catch{return defaults}}
@@ -19,5 +22,6 @@
   film.addEventListener("click",event=>{const button=event.target.closest("[data-remove]");if(!button)return;const next=photos().filter(photo=>photo.id!==button.dataset.remove);save(next.length?next:defaults);status.textContent="Photo removed."});
   document.getElementById("life-photo-input").addEventListener("change",async event=>{const files=[...event.target.files].slice(0,Math.max(0,12-photos().length));if(!files.length)return;try{const added=await Promise.all(files.map(async(file,index)=>({id:`life-${Date.now()}-${index}`,src:await resize(file),alt:file.name.replace(/\.[^.]+$/,"")})));save([...photos(),...added]);status.textContent=`${added.length} photo${added.length===1?"":"s"} added.`}catch{status.textContent="One of those photos could not be added."}event.target.value=""});
   document.getElementById("reset-life-photos").addEventListener("click",()=>{localStorage.removeItem(key);render();status.textContent="Life photos reset."});
+  prepareInterestSlideshows();
   syncEditor();
 })();

@@ -1,13 +1,7 @@
 import EditorToggle from "./editor-toggle";
 import InlineTextEditor from "./inline-text-editor";
+import InterestOrbits from "./interest-orbits";
 import LifeGalleryStrip from "./life-gallery-strip";
-
-const interests = [
-  { title: "Architecture", description: "Spaces, models, structures, and the ideas that shape how people live.", image: "/portfolio/river-house-2.jpg", href: "/category.html?category=architecture" },
-  { title: "Electronic Engineering", description: "Circuits, prototypes, and hands-on experiments with connected systems.", image: "/portfolio/circuits.jpg", href: "/category.html?category=electronic-engineering" },
-  { title: "Sports", description: "Movement, teamwork, discipline, and the energy of being active.", image: "/portfolio/bridge.jpg", href: "/category.html?category=sports" },
-  { title: "Music", description: "Rhythm, expression, listening, and the creative life beyond design.", image: "/portfolio/bloom-nest.jpg", href: "/category.html?category=music" },
-];
 
 export default function Home() {
   return (
@@ -43,18 +37,7 @@ export default function Home() {
           <p className="story-number">02 / My Interests</p>
           <h2 id="interests-title">Four directions I keep returning to</h2>
         </div>
-        <div className="interest-orbits">
-          {interests.map((interest, index) => (
-            <a className="interest-orbit" href={interest.href} key={interest.title}>
-              <span className="interest-image">
-                <img src={interest.image} alt="" />
-                <span className="interest-index">0{index + 1}</span>
-              </span>
-              <strong>{interest.title}</strong>
-              <span className="interest-description">{interest.description}</span>
-            </a>
-          ))}
-        </div>
+        <InterestOrbits />
       </section>
 
       <section className="personal-section story-section" aria-labelledby="beyond-title">
