@@ -8,8 +8,11 @@
   - `/Users/heidi/Documents/Personal Portofolio/homepage-top.png`
   - `/Users/heidi/Documents/Personal Portofolio/homepage-interests-final.png`
   - `/Users/heidi/Documents/Personal Portofolio/homepage-interest-slideshow.png`
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-compact-screen-1.png`
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-compact-screen-2.png`
   - `/Users/heidi/Documents/Personal Portofolio/homepage-filmstrip.png`
 - Verification viewport: 1280 × 720 px
+- Final desktop page height: 1352 CSS px, or 1.88 viewport heights. The maximum vertical scroll is 632 px, slightly less than one 720 px screen.
 - State: homepage, editor mode off; editor-on state also checked separately
 
 ## Comparison
@@ -38,7 +41,11 @@ Focused comparisons confirmed:
 
 - P2: The first Architecture circle initially used a text-heavy project board that cropped poorly inside a circle.
 - Fixed: Replaced it with a cleaner architectural model image and re-captured the interests section.
+- P2: The initial story layout measured 3470 px tall at a 720 px viewport, requiring almost four full screens of scrolling and making the homepage feel oversized.
+- Fixed: Reduced the desktop title, headings, copy, circles, section spacing, and film frames. Post-fix evidence is split across the two 1280 × 720 compact screenshots; the full page now measures 1352 px and fits within two screen lengths.
 
 ## Final result
 
-Passed. No remaining P0, P1, or P2 visual issues were found in the verified desktop state.
+final result: passed
+
+No remaining P0, P1, or P2 visual issues were found in the verified desktop state.
