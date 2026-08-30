@@ -1,0 +1,40 @@
+# Design QA — One-column portfolio homepage
+
+## Evidence
+
+- Reference: `/var/folders/sq/_dvnjcc95t7_clhwnk7brb0c0000gn/T/TemporaryItems/NSIRD_screencaptureui_oCjB9z/Screenshot 2026-08-30 at 11.20.09 AM.png`
+- Reference size: 1990 × 1132 px
+- Implementation captures:
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-top.png`
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-interests-final.png`
+  - `/Users/heidi/Documents/Personal Portofolio/homepage-filmstrip.png`
+- Verification viewport: 1280 × 720 px
+- State: homepage, editor mode off; editor-on state also checked separately
+
+## Comparison
+
+The reference is a conceptual wireframe for a single-column story: opening biography, four circular interest links, continued biography, and a movie-strip photo area. The implementation preserves that exact content order while applying the portfolio's existing warm drafting-paper palette, serif display typography, navy accents, and real project imagery.
+
+Focused comparisons confirmed:
+
+- Intro section reads as a single centered opening rather than the former left/right split.
+- Four interest links are equal-size circles, visually distinct, and route to their existing category pages.
+- The second biography section continues below the project interests and uses personal, lifestyle-oriented English copy.
+- The final photo browser is framed as a horizontal film strip and opens a separate photo gallery.
+
+## Interaction checks
+
+- Architecture category link opens the Architecture page.
+- Photo-strip link opens the separate photo gallery.
+- Wrench button toggles editor mode without leaving the page.
+- Editor mode reveals the local multi-image chooser and existing editable text controls.
+- No application errors were observed during the final browser check; only normal Vite development messages were present.
+
+## Iteration history
+
+- P2: The first Architecture circle initially used a text-heavy project board that cropped poorly inside a circle.
+- Fixed: Replaced it with a cleaner architectural model image and re-captured the interests section.
+
+## Final result
+
+Passed. No remaining P0, P1, or P2 visual issues were found in the verified desktop state.
