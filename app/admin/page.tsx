@@ -41,7 +41,7 @@ export default function AdminPage() {
           <button type="button" onClick={() => setEditorMode(true)}>Turn editor on</button>
           <button type="button" onClick={() => setEditorMode(false)}>Turn editor off</button>
           <a href="/index.html">Edit homepage</a>
-          <a href="/">View portfolio</a>
+          <a href="/index.html">View portfolio</a>
         </div>
         <p className="admin-status" aria-live="polite">{status}</p>
         <h2>Edit a project</h2>

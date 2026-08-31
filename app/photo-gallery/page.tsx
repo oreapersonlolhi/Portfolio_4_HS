@@ -8,6 +8,6 @@ export default function PhotoGalleryPage() {
     <h1>Life in Frames</h1>
     <p className="gallery-intro">A growing collection of people, places, and everyday moments beyond the project work.</p>
     <PhotoGalleryClient />
-    <p className="gallery-back"><a href="/">Back to Heidi&apos;s portfolio</a></p>
+    <p className="gallery-back"><a href="/index.html">Back to Heidi&apos;s portfolio</a></p>
   </main>;
 }
