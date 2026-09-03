@@ -380,7 +380,9 @@ window.PORTFOLIO_PROJECTS = [
       "public/portfolio/full/church/church-024.jpg",
       "public/portfolio/full/church/church-025.jpg",
       "public/portfolio/full/church/church-026.jpg",
-      "public/portfolio/full/church/church-027.jpg"
+      "public/portfolio/full/church/church-027.jpg",
+      "public/portfolio/full/church/church-028.png",
+      "public/portfolio/full/church/church-029.png"
     ],
     "summary": "A sacred-space study focused on light, quietness, gathering, and architectural atmosphere.",
     "notes": [
