@@ -1003,7 +1003,7 @@ body:has(.story-home) {
 }
 
 .interest-section {
-  background: #f1ebde;
+  background: transparent;
 }
 
 .story-heading-row {

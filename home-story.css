@@ -7,7 +7,7 @@ body { overflow:auto; }
 .story-intro h1 { max-width:none; margin:0; font-size:clamp(4rem,10vw,8.8rem); line-height:.9; }
 .story-copy { color:var(--muted); font-size:clamp(1.04rem,1.7vw,1.26rem); line-height:1.8; }
 .story-copy p { margin:0; }.story-copy p+p { margin-top:20px; }.story-copy-wide { max-width:920px; margin:54px auto 0; }
-.interest-section { background:#f1ebde; }
+.interest-section { background:transparent; }
 .story-heading-row { display:grid; grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr); gap:50px; align-items:end; margin-bottom:64px; }.story-heading-row .story-number{margin:0}
 .story-heading-row h2,.personal-grid h2,.life-heading h2,.photo-gallery-page h1 { margin:0; font-family:var(--font-heading); font-weight:400; line-height:1; }
 .story-heading-row h2,.personal-grid h2,.life-heading h2 { font-size:clamp(2.6rem,5.5vw,5rem); }
