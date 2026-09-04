@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" stroke="#877d68" stroke-opacity=".09" stroke-width="1"/>
+      <path d="M40 0V80M0 40H80" stroke="#877d68" stroke-opacity=".035" stroke-width="1"/>
+    </pattern>
+    <g id="column" stroke="#776d5a" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M54 132H246M68 146H232M78 162H222"/>
+      <path d="M92 162V808M208 162V808"/>
+      <path d="M104 175V796M120 175V796M136 175V796M152 175V796M168 175V796M184 175V796M196 175V796" stroke-width=".7"/>
+      <path d="M72 808H228M58 826H242M42 850H258M32 878H268"/>
+      <path d="M84 116L108 92H192L216 116M72 132L96 116H204L228 132"/>
+      <path d="M112 92C106 74 118 62 132 76C132 54 154 48 160 70C174 52 194 66 188 86"/>
+      <path d="M102 92C86 74 84 56 106 48M198 92C214 74 216 56 194 48"/>
+      <circle cx="110" cy="76" r="9"/><circle cx="190" cy="76" r="9"/>
+    </g>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <g opacity=".13" stroke-width="1.4">
+    <use href="#column" x="8"/>
+    <use href="#column" x="1292"/>
+  </g>
+  <g stroke="#776d5a" stroke-opacity=".075" stroke-width="1.4">
+    <path d="M190 146C420 -60 1180 -60 1410 146"/>
+    <path d="M228 162C450 -18 1150 -18 1372 162"/>
+    <path d="M300 920H1300"/>
+    <circle cx="800" cy="88" r="34"/>
+    <path d="M766 88H834M800 54V122"/>
+  </g>
+</svg>

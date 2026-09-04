@@ -1,13 +1,16 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap");
 
 :root {
-  --background: #fbfaf6;
+  --background: #fffdf8;
   --foreground: #171a1f;
   --muted: #6c716d;
-  --line: #d9d4c9;
+  --line: #e4ded1;
   --blue: #24577a;
   --green: #6f7f56;
-  --paper: #fffdf8;
+  --paper: #fffefb;
+  --font-heading: "Libre Baskerville", Baskerville, "Baskerville Old Face", Georgia, serif;
+  --font-body: "Work Sans", "Avenir Next", Avenir, Helvetica, Arial, sans-serif;
 }
 
 @theme inline {
@@ -26,12 +29,24 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   background:
-    linear-gradient(90deg, rgba(36, 87, 122, 0.025), transparent 22%, transparent 78%, rgba(111, 127, 86, 0.035)),
+    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.96), transparent 42%),
+    linear-gradient(180deg, rgba(255, 254, 250, 0.96), rgba(251, 248, 239, 0.88)),
     var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url("/architecture-columns.svg") center top / max(100vw, 1120px) auto repeat-y;
+  content: "";
+  opacity: 0.82;
+  pointer-events: none;
 }
 
 body:not(.editor-mode):has(.home-page) {
@@ -40,6 +55,8 @@ body:not(.editor-mode):has(.home-page) {
 }
 
 main {
+  position: relative;
+  z-index: 1;
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
   padding: 64px 0 48px;
@@ -93,7 +110,7 @@ body:not(.editor-mode) .home-page .intro-row {
 .project-copy h3,
 .intro-row h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-weight: 400;
   letter-spacing: 0;
 }
@@ -362,7 +379,7 @@ body:not(.editor-mode) .home-page footer {
 .home-about h2,
 .home-section-heading h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 400;
   line-height: 1;
@@ -493,7 +510,7 @@ body:not(.editor-mode) .home-page footer {
   bottom: 22px;
   left: 24px;
   z-index: 1;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-size: clamp(1.65rem, 3vw, 2.4rem);
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
 }
@@ -605,7 +622,7 @@ footer p {
 
 .admin-panel h2 {
   margin-top: 34px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-weight: 400;
 }
 
@@ -669,7 +686,7 @@ footer p {
 .custom-home-item { overflow: hidden; border: 1px solid var(--line); background: var(--paper); }
 .custom-home-item img { display: block; width: 100%; max-height: 520px; object-fit: cover; }
 .custom-item-copy { padding: 24px; }
-.custom-item-copy h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; font-weight: 400; }
+.custom-item-copy h2 { margin: 0; font-family: var(--font-heading); font-size: 2rem; font-weight: 400; }
 .custom-item-copy p { color: var(--muted); line-height: 1.7; }
 .custom-item-editor { display: grid; gap: 8px; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
 .custom-item-editor button { justify-self: start; background: #7b3434; }
@@ -1006,7 +1023,7 @@ body:has(.story-home) {
 .life-heading h2,
 .photo-gallery-page h1 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-weight: 400;
   line-height: 1;
 }
@@ -1082,7 +1099,7 @@ body:has(.story-home) {
 
 .interest-orbit strong {
   margin-top: 22px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-size: clamp(1.2rem, 2vw, 1.75rem);
   font-weight: 400;
 }
