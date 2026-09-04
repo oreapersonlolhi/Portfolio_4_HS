@@ -972,7 +972,7 @@ body:has(.story-home) {
 .story-intro {
   min-height: 72vh;
   border-top: 1px solid var(--line);
-  background: rgba(255, 253, 248, 0.52);
+  background: transparent;
   text-align: center;
 }
 
@@ -1112,7 +1112,7 @@ body:has(.story-home) {
 }
 
 .personal-section {
-  background: rgba(255, 253, 248, 0.7);
+  background: transparent;
 }
 
 .personal-grid {
@@ -1126,7 +1126,7 @@ body:has(.story-home) {
   padding-right: 0;
   padding-left: 0;
   border-bottom: 1px solid var(--line);
-  background: #e8dfcf;
+  background: transparent;
 }
 
 .life-heading {
