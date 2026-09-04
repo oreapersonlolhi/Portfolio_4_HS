@@ -44,7 +44,7 @@ export default function Home() {
         <p className="story-number">03 / Beyond the Projects</p>
         <div className="personal-grid">
           <h2 id="beyond-title">The person behind the portfolio</h2>
-          <div className="story-copy">
+          <div className="story-copy" hidden aria-hidden="true">
             <p>Outside the studio, I value curiosity, practice, and the small routines that make ambitious work possible. Sport teaches me persistence and how to contribute to a team; music gives me another language for mood, timing, and expression.</p>
             <p>I&apos;m interested not only in finished results, but in the experiences around them—people I learn from, places that stay in my memory, and everyday moments that reveal something new about how I see the world.</p>
           </div>
