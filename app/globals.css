@@ -998,6 +998,7 @@ body:has(.story-home) {
 }
 
 .story-copy-wide {
+  min-height: 5.5em;
   max-width: 920px;
   margin: 54px auto 0;
 }
@@ -1008,9 +1009,9 @@ body:has(.story-home) {
 
 .story-heading-row {
   display: grid;
-  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1.45fr);
-  gap: 50px;
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: start;
   margin-bottom: 64px;
 }
 
@@ -1322,7 +1323,7 @@ body:has(.story-home) {
 
   .story-intro {
     min-height: auto;
-    padding-bottom: 12px;
+    padding-bottom: 30px;
   }
 
   .story-intro h1 {
@@ -1343,13 +1344,14 @@ body:has(.story-home) {
   }
 
   .story-copy-wide {
+    min-height: 80px;
     max-width: 800px;
     margin-top: 22px;
   }
 
   .story-heading-row {
-    grid-template-columns: 170px minmax(0, 1fr);
-    gap: 28px;
+    grid-template-columns: 1fr;
+    gap: 8px;
     margin-bottom: 22px;
   }
 
