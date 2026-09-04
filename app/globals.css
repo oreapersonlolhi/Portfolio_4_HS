@@ -1115,6 +1115,7 @@ body:has(.story-home) {
 }
 
 .personal-section {
+  padding-bottom: 16px;
   background: transparent;
 }
 
@@ -1126,6 +1127,7 @@ body:has(.story-home) {
 }
 
 .life-section {
+  padding-top: 16px;
   padding-right: 0;
   padding-left: 0;
   border-bottom: 1px solid var(--line);
@@ -1137,7 +1139,14 @@ body:has(.story-home) {
   align-items: end;
   justify-content: space-between;
   gap: 30px;
-  padding: 0 clamp(20px, 5vw, 72px) 44px;
+  padding: 0 clamp(20px, 5vw, 72px) 10px;
+}
+
+.editor-mode .life-heading .inline-editable:empty {
+  min-height: 12px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1;
 }
 
 .gallery-link,
@@ -1294,6 +1303,8 @@ body:has(.story-home) {
   .story-heading-row,
   .personal-grid { grid-template-columns: 1fr; gap: 28px; }
   .interest-orbits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px 22px; }
+  .personal-section { padding-bottom: 16px; }
+  .life-section { padding-top: 16px; }
   .life-heading { align-items: start; flex-direction: column; padding-right: 22px; padding-left: 22px; }
   .life-gallery-grid { grid-template-columns: 1fr; }
 }
@@ -1400,11 +1411,11 @@ body:has(.story-home) {
   }
 
   .life-section {
-    padding: 34px 0 28px;
+    padding: 8px 0 28px;
   }
 
   .life-heading {
-    padding: 0 52px 18px;
+    padding: 0 52px 8px;
   }
 
   .gallery-link {
