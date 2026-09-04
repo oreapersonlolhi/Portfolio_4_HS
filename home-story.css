@@ -13,7 +13,7 @@ body { overflow:auto; }
 .story-heading-row h2,.personal-grid h2,.life-heading h2 { font-size:clamp(2.6rem,5.5vw,5rem); }
 .interest-orbits { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(20px,3vw,44px); }
 .interest-orbit { display:grid; justify-items:center; color:var(--foreground); text-align:center; text-decoration:none; }
-.interest-image { position:relative; display:block; width:100%; aspect-ratio:1; overflow:hidden; border:8px solid rgba(255,253,248,.88); border-radius:50%; background:var(--blue); box-shadow:0 16px 34px rgba(26,34,40,.18); transition:transform .24s ease,box-shadow .24s ease; }
+.interest-image { position:relative; display:block; width:100%; aspect-ratio:1; overflow:hidden; border:8px solid rgba(255,253,248,.88); border-radius:50%; background:var(--blue); box-shadow:0 16px 34px rgba(26,34,40,.18); color:transparent; font-size:0; transition:transform .24s ease,box-shadow .24s ease; }
 .interest-image img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(.96); opacity:0; transition:opacity 700ms ease; }
 .interest-image img:first-of-type { opacity:1; }
 .interest-image.is-cycling img:first-of-type { opacity:0; }

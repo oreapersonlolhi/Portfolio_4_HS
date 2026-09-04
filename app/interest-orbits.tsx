@@ -52,7 +52,7 @@ export default function InterestOrbits() {
         onFocus={() => start(interest)} onBlur={() => stop(interest.slug)}>
         <span className={`interest-image ${activeImage !== undefined ? "is-cycling" : ""}`}>
           {interest.images.map((image, imageIndex) => <img className={activeImage === imageIndex ? "is-active" : ""}
-            src={imagePath(image)} alt={`${interest.title} project ${imageIndex + 1}`} key={`${image}-${imageIndex}`} />)}
+            src={imagePath(image)} alt="" key={`${image}-${imageIndex}`} />)}
           <span className="interest-index">0{index + 1}</span>
         </span>
         <strong>{interest.title}</strong>
