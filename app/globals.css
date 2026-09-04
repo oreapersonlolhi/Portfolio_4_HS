@@ -970,7 +970,7 @@ body:has(.story-home) {
 }
 
 .story-intro {
-  min-height: 72vh;
+  min-height: auto;
   border-top: 1px solid var(--line);
   background: transparent;
   text-align: center;
@@ -979,8 +979,8 @@ body:has(.story-home) {
 .story-intro h1 {
   max-width: none;
   margin: 0;
-  font-size: clamp(4rem, 10vw, 8.8rem);
-  line-height: 0.9;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: 0.95;
 }
 
 .story-copy {
@@ -1298,7 +1298,7 @@ body:has(.story-home) {
 }
 
 @media (max-width: 480px) {
-  .story-intro h1 { font-size: 3.5rem; }
+  .story-intro h1 { font-size: 2.65rem; }
   .story-copy-wide { margin-top: 34px; }
   .interest-orbits { grid-template-columns: 1fr; }
   .interest-image { width: min(290px, 86vw); }
@@ -1321,11 +1321,16 @@ body:has(.story-home) {
   }
 
   .story-intro {
-    min-height: 350px;
+    min-height: auto;
+    padding-bottom: 12px;
   }
 
   .story-intro h1 {
-    font-size: clamp(3.6rem, 7.2vw, 5.8rem);
+    font-size: clamp(2.5rem, 4.5vw, 4.3rem);
+  }
+
+  .interest-section {
+    padding-top: 12px;
   }
 
   .story-copy {
